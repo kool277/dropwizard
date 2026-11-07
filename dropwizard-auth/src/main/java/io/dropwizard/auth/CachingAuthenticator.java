@@ -107,9 +107,20 @@ public class CachingAuthenticator<C, P extends Principal> implements Authenticat
                 return optPrincipal;
             };
         }
-        this.cache = builder
-                .recordStats(supplier)
-                .build(loader);
+        this.cache = recordStatsUnlessEnabled(builder, supplier).build(loader);
+    }
+
+    /**
+     * Caffeine allows statistics recording to be configured only once. A cache spec containing {@code recordStats}, or
+     * a builder that was already used for another cache, has done so, and then its statistics counter is kept.
+     */
+    static Caffeine<Object, Object> recordStatsUnlessEnabled(Caffeine<Object, Object> builder,
+                                                             Supplier<StatsCounter> supplier) {
+        try {
+            return builder.recordStats(supplier);
+        } catch (IllegalStateException alreadyEnabled) {
+            return builder;
+        }
     }
 
     @Override

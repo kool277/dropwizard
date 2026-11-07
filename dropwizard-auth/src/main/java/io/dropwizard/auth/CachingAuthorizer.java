@@ -94,8 +94,7 @@ public class CachingAuthorizer<P extends Principal> implements Authorizer<P> {
         this.underlying = authorizer;
         this.cacheMisses = metricRegistry.meter(name(authorizer.getClass(), "cache-misses"));
         this.getsTimer = metricRegistry.timer(name(authorizer.getClass(), "gets"));
-        this.cache = builder
-                .recordStats(supplier)
+        this.cache = CachingAuthenticator.recordStatsUnlessEnabled(builder, supplier)
                 .build(key -> {
                     cacheMisses.mark();
                     return underlying.authorize(key.getPrincipal(), key.getRole(), key.getRequestContext());

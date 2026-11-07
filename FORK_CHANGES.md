@@ -126,3 +126,14 @@ Each fix has a test that fails on the upstream base and passes here, shown by `c
 - Commit: `fix(health): notify health state listeners once per change (dropwizard/dropwizard#11371)`
 - Status: fork-only; upstream fix proposed in the PR above
 - Files: `dropwizard-health/src/main/java/io/dropwizard/health/HealthCheckManager.java`, `dropwizard-health/src/test/java/io/dropwizard/health/HealthCheckManagerListenerTest.java`
+
+### B11: Caching decorators reject specs with `recordStats`
+
+- Upstream issue: None found.
+- Module: `dropwizard-auth`
+- Root cause: `CachingAuthenticator` and `CachingAuthorizer` always call `recordStats` on the builder, which Caffeine allows only once.
+- Visible change: A valid cache spec that contains `recordStats` now works. This turns a startup failure into success only for that valid configuration; the catch covers the single `recordStats` call and nothing else, so invalid specs still fail at startup.
+- Proving test: `dropwizard-auth CachingWithRecordStatsTest`
+- Commit: `fix(auth): allow caches that already record statistics`
+- Status: fork-only
+- Files: `dropwizard-auth/src/main/java/io/dropwizard/auth/CachingAuthenticator.java`, `dropwizard-auth/src/main/java/io/dropwizard/auth/CachingAuthorizer.java`, `dropwizard-auth/src/test/java/io/dropwizard/auth/CachingWithRecordStatsTest.java`

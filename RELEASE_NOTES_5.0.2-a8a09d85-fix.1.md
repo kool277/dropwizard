@@ -14,3 +14,4 @@ Based on upstream `a8a09d85e6` on `release/5.0.x`, 148 commits after `v5.0.2`. T
 - Stop truncating client timeouts of 25 days or more, which failed the build or silently became much shorter. (B8)
 - Saturate `DataSizeUnit` conversions instead of overflowing to wrong or negative sizes, which also broke `@MaxDataSize` checks and comparisons. (B9)
 - Notify health state listeners once per state change instead of twice, and stop their exceptions from escaping. (B10)
+- Allow `CachingAuthenticator` and `CachingAuthorizer` to use cache specs that contain `recordStats`, which failed at startup. (B11)
