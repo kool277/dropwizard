@@ -49,3 +49,14 @@ Each fix has a test that fails on the upstream base and passes here, shown by `c
 - Commit: `fix(jersey): stop treating AbstractParam errors as format strings (dropwizard/dropwizard#11364)`
 - Status: fork-only; upstream fix proposed in the PR above
 - Files: `dropwizard-jersey/src/main/java/io/dropwizard/jersey/params/AbstractParam.java`, `dropwizard-jersey/src/test/java/io/dropwizard/jersey/params/AbstractParamErrorMessageTest.java`, `dropwizard-jersey/pom.xml`
+
+### B4: Constraint message cache has no size limit
+
+- Upstream issue: None found.
+- Module: `dropwizard-jersey`
+- Root cause: `ConstraintMessage.PREFIX_CACHE` only expires entries after an hour, and its key includes the violation path, which for a `Map` includes the client's map keys.
+- Visible change: None. Evicted entries are recalculated.
+- Proving test: `dropwizard-jersey ConstraintMessageCacheTest`
+- Commit: `fix(jersey): bound the constraint message prefix cache`
+- Status: fork-only
+- Files: `dropwizard-jersey/src/main/java/io/dropwizard/jersey/validation/ConstraintMessage.java`, `dropwizard-jersey/src/test/java/io/dropwizard/jersey/validation/ConstraintMessageCacheTest.java`
