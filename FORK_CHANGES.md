@@ -137,3 +137,14 @@ Each fix has a test that fails on the upstream base and passes here, shown by `c
 - Commit: `fix(auth): allow caches that already record statistics`
 - Status: fork-only
 - Files: `dropwizard-auth/src/main/java/io/dropwizard/auth/CachingAuthenticator.java`, `dropwizard-auth/src/main/java/io/dropwizard/auth/CachingAuthorizer.java`, `dropwizard-auth/src/test/java/io/dropwizard/auth/CachingWithRecordStatsTest.java`
+
+### B12: `afterAll` tears down extensions that never started
+
+- Upstream issue: None found.
+- Module: `dropwizard-testing`
+- Root cause: `DropwizardExtensionsSupport.afterAll` iterates over all fields, without the record of successful `before()` calls that `afterEach` has.
+- Visible change: `after()` runs only for fields whose `before()` succeeded.
+- Proving test: `dropwizard-testing DropwizardExtensionsSupportAfterAllTest`
+- Commit: `fix(testing): only tear down extensions whose before() succeeded in beforeAll`
+- Status: fork-only
+- Files: `dropwizard-testing/src/main/java/io/dropwizard/testing/junit5/DropwizardExtensionsSupport.java`, `dropwizard-testing/src/test/java/io/dropwizard/testing/junit5/DropwizardExtensionsSupportAfterAllTest.java`

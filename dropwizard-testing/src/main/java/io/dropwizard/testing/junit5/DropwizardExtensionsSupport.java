@@ -58,8 +58,22 @@ public class DropwizardExtensionsSupport
 
         // Keys within NAMESPACE:
         //   String SUCCEEDED_BEFORE_INSTANCES_KEY -> List<InstanceAndField>  (method-scoped: context.getStore)
+        //   String SUCCEEDED_BEFORE_ALL_KEY + testClass -> List<InstanceAndField>  (class-scoped: context.getStore)
         //   Class<?> testClass                    -> Boolean isPerClass      (root-scoped: context.getRoot().getStore)
         private static final String SUCCEEDED_BEFORE_INSTANCES_KEY = "succeededBeforeInstances";
+        private static final String SUCCEEDED_BEFORE_ALL_KEY = "succeededBeforeAll:";
+
+        static void putBeforeAllList(ExtensionContext context, List<InstanceAndField> list) {
+            context.getStore(NAMESPACE)
+                .put(SUCCEEDED_BEFORE_ALL_KEY + context.getRequiredTestClass().getName(), list);
+        }
+
+        @Nullable
+        @SuppressWarnings("unchecked")
+        static List<InstanceAndField> getBeforeAllList(ExtensionContext context) {
+            return (List<InstanceAndField>) context.getStore(NAMESPACE)
+                .get(SUCCEEDED_BEFORE_ALL_KEY + context.getRequiredTestClass().getName(), List.class);
+        }
 
         static void putBeforeInstanceList(ExtensionContext context, List<InstanceAndField> list) {
             context.getStore(NAMESPACE)
@@ -96,33 +110,31 @@ public class DropwizardExtensionsSupport
         // inspecting attached annotations via reflection.
         ExtensionContextUtil.putClassLifecycle(context, context.getRequiredTestClass(), isPerClass(context));
 
+        // Stored before anything can throw: JUnit fires afterAll even when beforeAll threw, and afterAll must only
+        // clean up fields whose before() succeeded and wasn't rolled back.
+        List<InstanceAndField> successfulBeforeAll = new ArrayList<>();
+        ExtensionContextUtil.putBeforeAllList(context, successfulBeforeAll);
+
         // Static fields always fire at beforeAll (their natural class-level scope).
         invokeBeforeAll(
             collectStaticFields(context.getRequiredTestClass()),
-            null);  // testInstance=null
+            null,  // testInstance=null
+            successfulBeforeAll);
         // Non-static fields fire only under PER_CLASS.
         if (isPerClass(context)) {
             Object testInstance = context.getRequiredTestInstance();
-            invokeBeforeAll(collectInstanceFields(testInstance.getClass()), testInstance);
+            invokeBeforeAll(collectInstanceFields(testInstance.getClass()), testInstance, successfulBeforeAll);
         }
     }
 
     @Override
     public void afterAll(ExtensionContext context) throws Exception {
-        // Assemble the full teardown list in the order after() calls should fire: PER_CLASS instance fields first
-        // (reversed for setup/teardown symmetry), then static fields (also reversed). Building one list lets us share
-        // invocation + error-aggregation logic with afterEach.
-        List<InstanceAndField> teardown = new ArrayList<>();
-        if (isPerClass(context)) {
-            Object testInstance = context.getRequiredTestInstance();
-            for (Field f : copyAndReverse(collectInstanceFields(testInstance.getClass()))) {
-                teardown.add(new InstanceAndField(testInstance, f));
-            }
+        // Reversing the fields that succeeded in beforeAll gives PER_CLASS instance fields first (reversed for
+        // setup/teardown symmetry), then static fields (also reversed).
+        List<InstanceAndField> successfulBeforeAll = ExtensionContextUtil.getBeforeAllList(context);
+        if (successfulBeforeAll != null) {
+            invokeAfter(copyAndReverse(successfulBeforeAll));
         }
-        for (Field f : copyAndReverse(collectStaticFields(context.getRequiredTestClass()))) {
-            teardown.add(new InstanceAndField(null, f));
-        }
-        invokeAfter(teardown);
     }
 
     @Override
@@ -202,7 +214,8 @@ public class DropwizardExtensionsSupport
         return successfulBeforeInstances;
     }
 
-    private void invokeBeforeAll(List<Field> fields, @Nullable Object testInstance) throws Exception {
+    private void invokeBeforeAll(List<Field> fields, @Nullable Object testInstance,
+                                 List<InstanceAndField> successfulBeforeAll) throws Exception {
         List<Field> successfulFields = new ArrayList<>();
         for (Field field : fields) {
             try {
@@ -221,6 +234,9 @@ public class DropwizardExtensionsSupport
                 Throwables.throwIfUnchecked(primary);
                 throw new Exception(primary);
             }
+        }
+        for (Field field : successfulFields) {
+            successfulBeforeAll.add(new InstanceAndField(testInstance, field));
         }
     }
 
