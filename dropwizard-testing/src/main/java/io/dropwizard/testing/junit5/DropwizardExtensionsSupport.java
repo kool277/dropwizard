@@ -140,10 +140,8 @@ public class DropwizardExtensionsSupport
     @Override
     public void beforeEach(ExtensionContext context) throws Exception {
         // Non-static fields fire here only under PER_METHOD. Also walk enclosing classes so nested tests can
-        // reach outer-class non-static fields (see #2906, #4205).
-        if (isPerClass(context)) {
-            return;
-        }
+        // reach outer-class non-static fields (see #2906, #4205). The lifecycle is checked per class during the walk
+        // since an enclosing class can use PER_METHOD when the innermost class uses PER_CLASS.
         Object testInstance = context.getRequiredTestInstance();
         List<InstanceAndField> successfulBeforeInstances = invokeBeforeEachWithEnclosingWalk(testInstance, context);
         // Store the successfully-invoked set so afterEach knows which fields to clean up. JUnit fires afterEach
@@ -153,9 +151,6 @@ public class DropwizardExtensionsSupport
 
     @Override
     public void afterEach(ExtensionContext context) throws Exception {
-        if (isPerClass(context)) {
-            return;
-        }
         final List<InstanceAndField> successfulBeforeInstances = ExtensionContextUtil.getBeforeInstancesList(context);
         if (successfulBeforeInstances == null) {
             // beforeEach didn't run or threw before storing - nothing to clean up.

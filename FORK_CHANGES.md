@@ -148,3 +148,14 @@ Each fix has a test that fails on the upstream base and passes here, shown by `c
 - Commit: `fix(testing): only tear down extensions whose before() succeeded in beforeAll`
 - Status: fork-only
 - Files: `dropwizard-testing/src/main/java/io/dropwizard/testing/junit5/DropwizardExtensionsSupport.java`, `dropwizard-testing/src/test/java/io/dropwizard/testing/junit5/DropwizardExtensionsSupportAfterAllTest.java`
+
+### B13: Outer extension never starts under a `PER_CLASS` nested class
+
+- Upstream issue: None found.
+- Module: `dropwizard-testing`
+- Root cause: `beforeEach` and `afterEach` return early based on the innermost class's lifecycle, before the walk over enclosing instances that checks each class.
+- Visible change: Outer `PER_METHOD` fields start and stop around each nested test, as the class's Javadoc says.
+- Proving test: `dropwizard-testing DropwizardExtensionsSupportNestedPerClassTest`
+- Commit: `fix(testing): start outer extensions under a PER_CLASS nested class`
+- Status: fork-only
+- Files: `dropwizard-testing/src/main/java/io/dropwizard/testing/junit5/DropwizardExtensionsSupport.java`, `dropwizard-testing/src/test/java/io/dropwizard/testing/junit5/DropwizardExtensionsSupportNestedPerClassTest.java`
