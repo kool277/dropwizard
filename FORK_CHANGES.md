@@ -71,3 +71,14 @@ Each fix has a test that fails on the upstream base and passes here, shown by `c
 - Commit: `fix(hibernate): bind nested units of work correctly on DualSessionFactory`
 - Status: fork-only
 - Files: `dropwizard-hibernate/src/main/java/io/dropwizard/hibernate/UnitOfWorkAspect.java`, `dropwizard-hibernate/src/test/java/io/dropwizard/hibernate/dual/DualSessionFactoryUnitOfWorkTest.java`
+
+### B6: `DualSessionFactory` fails on threads that never called `prepare`
+
+- Upstream issue: None found.
+- Module: `dropwizard-hibernate`
+- Root cause: The active factory is a `ThreadLocal` that the constructor sets for its own thread only.
+- Visible change: Calls on other threads use the primary factory instead of throwing `NullPointerException`.
+- Proving test: `dropwizard-hibernate DualSessionFactoryTest#threadsThatNeverPreparedUseThePrimaryFactory`
+- Commit: `fix(hibernate): use the primary factory on threads that never prepared`
+- Status: fork-only
+- Files: `dropwizard-hibernate/src/main/java/io/dropwizard/hibernate/dual/DualSessionFactory.java`, `dropwizard-hibernate/src/test/java/io/dropwizard/hibernate/dual/DualSessionFactoryTest.java`
