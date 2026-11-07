@@ -104,3 +104,14 @@ Each fix has a test that fails on the upstream base and passes here, shown by `c
 - Commit: `fix(client): stop truncating timeouts to int milliseconds`
 - Status: fork-only
 - Files: `dropwizard-client/src/main/java/io/dropwizard/client/HttpClientBuilder.java`, `dropwizard-client/src/test/java/io/dropwizard/client/HttpClientBuilderTest.java`
+
+### B9: `DataSizeUnit` conversions overflow
+
+- Upstream issue: [dropwizard/dropwizard#11363](https://github.com/dropwizard/dropwizard/pull/11363), open.
+- Module: `dropwizard-util`
+- Root cause: `convert` multiplies by the number of bits first, which overflows at 2^60 bytes.
+- Visible change: Results that fit are correct, and results that don't fit saturate at `Long.MAX_VALUE` or `Long.MIN_VALUE`.
+- Proving test: `dropwizard-util DataSizeOverflowTest`
+- Commit: `fix(util): saturate DataSizeUnit conversions instead of overflowing (dropwizard/dropwizard#11363)`
+- Status: fork-only; upstream fix proposed in the PR above
+- Files: `dropwizard-util/src/main/java/io/dropwizard/util/DataSizeUnit.java`, `dropwizard-util/src/test/java/io/dropwizard/util/DataSizeOverflowTest.java`

@@ -1,5 +1,7 @@
 package io.dropwizard.util;
 
+import java.math.BigInteger;
+
 /**
  * A unit of information using SI and IEC prefixes.
  *
@@ -93,14 +95,26 @@ public enum DataSizeUnit {
     }
 
     /**
-     * Converts a size of the given unit into the current unit.
+     * Converts a size of the given unit into the current unit. A result that does not fit in a {@code long}
+     * saturates to {@link Long#MAX_VALUE} or {@link Long#MIN_VALUE}, as {@link java.util.concurrent.TimeUnit} does.
      *
      * @param size the magnitude of the size
      * @param unit the unit of the size
      * @return the given size in the current unit.
      */
     public long convert(long size, DataSizeUnit unit) {
-        return (size * unit.bits) / bits;
+        try {
+            return Math.multiplyExact(size, unit.bits) / bits;
+        } catch (ArithmeticException bitCountOverflow) {
+            // The result can still fit when converting to a coarser unit, so redo the scaling without overflow.
+            final BigInteger converted = BigInteger.valueOf(size)
+                .multiply(BigInteger.valueOf(unit.bits))
+                .divide(BigInteger.valueOf(bits));
+            if (converted.bitLength() > Long.SIZE - 1) {
+                return converted.signum() > 0 ? Long.MAX_VALUE : Long.MIN_VALUE;
+            }
+            return converted.longValue();
+        }
     }
 
     /**
