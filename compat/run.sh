@@ -24,14 +24,19 @@ if [ "${1:-}" = "--full" ]; then
     for round in $(seq 1 "$rounds"); do
         jmh=""
         [ "$round" = 1 ] && jmh="--jmh"
-        "$compat_dir/perf.sh" "$base_tree" "$perf/upstream-$round.json" $jmh || status=1
-        "$compat_dir/perf.sh" "$compat_root" "$perf/fork-$round.json" $jmh || status=1
+        # Alternate which side goes first, so that a drift in the machine's load doesn't favour one side.
+        if [ $((round % 2)) -eq 1 ]; then sides="upstream fork"; else sides="fork upstream"; fi
+        for side in $sides; do
+            if [ "$side" = upstream ]; then tree="$base_tree"; else tree="$compat_root"; fi
+            "$compat_dir/perf.sh" "$tree" "$perf/$side-$round.json" $jmh || status=1
+        done
         base_results+=("$perf/upstream-$round.json")
         fork_results+=("$perf/fork-$round.json")
     done
     "$compat_dir/startup_ab.sh" "$base_tree" "$compat_root" "$perf/startup.json" "${COMPAT_STARTUP_SAMPLES:-12}" || status=1
-    python3 "$compat_dir/compare_perf.py" --startup "$perf/startup.json" "${base_results[@]}" -- "${fork_results[@]}" \
-        | tee "$perf/comparison.txt"
+    "$compat_dir/latency_ab.sh" "$base_tree" "$compat_root" "$perf/latency.json" "${COMPAT_LATENCY_TRIALS:-8}" || status=1
+    python3 "$compat_dir/compare_perf.py" --startup "$perf/startup.json" --latency "$perf/latency.json" \
+        "${base_results[@]}" -- "${fork_results[@]}" | tee "$perf/comparison.txt"
     [ "${PIPESTATUS[0]}" -eq 0 ] || status=1
 fi
 if [ $status -eq 0 ]; then echo "RESULT: PASS"; else echo "RESULT: FAIL"; fi

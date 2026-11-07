@@ -15,12 +15,14 @@ java -Xmx512m -jar "$jar" db migrate "$compat_dir/perf.yml" > "$work/migrate.log
 
 # A CPU quota would add throttling pauses that hide small differences, so use dedicated CPUs where available.
 split_cpus
+jvm_cpus=()
+[ "${#server_on[@]}" -gt 0 ] && jvm_cpus=(-XX:ActiveProcessorCount=4)
 
 # Sets server_pid and startup_ms. Not called in a subshell, so that both stay visible.
 start_server() {
     local started
     started="$(date +%s%3N)"
-    "${server_on[@]}" java -Xmx512m -Xlog:gc:file="$work/gc.log" -jar "$jar" server "$compat_dir/perf.yml" > "$work/server.log" 2>&1 &
+    "${server_on[@]}" java -Xmx512m "${jvm_cpus[@]}" -Xlog:gc:file="$work/gc.log" -jar "$jar" server "$compat_dir/perf.yml" > "$work/server.log" 2>&1 &
     server_pid=$!
     if ! startup_ms="$(wait_for_200 http://127.0.0.1:8081/healthcheck "$started")"; then
         echo "Server did not start, see the log below" >&2
@@ -34,27 +36,22 @@ stop_server() {
     wait "$server_pid" 2>/dev/null
 }
 
-startups=()
-for _ in 1 2 3; do
-    start_server
-    startups+=("$startup_ms")
-    stop_server
-done
-
-# Light load, then resident memory
+# Light load, then resident memory. Startup is compared separately by startup_ab.sh; this one is kept for the record.
 start_server
+startups=("$startup_ms")
 "${client_on[@]}" wrk -t1 -c2 -d60s --timeout 10s http://127.0.0.1:8080/hello-world > /dev/null
 rss_kb="$(awk '/VmRSS/{print $2}' "/proc/$server_pid/status")"
 stop_server
 
-# Heavy load, with JFR recording only the measured window
+# Heavy load with JFR recording, for allocation and garbage collection. Latency is compared by latency_ab.sh, without a
+# profiler attached.
 measure() {
     local name="$1"
     export COMPAT_POST="$2"
     start_server
     "${client_on[@]}" wrk -t2 -c32 -d15s -s "$compat_dir/report.lua" --timeout 10s http://127.0.0.1:8080/hello-world > /dev/null
     jcmd "$server_pid" JFR.start name=compat settings=profile > /dev/null
-    "${client_on[@]}" wrk -t2 -c32 -d60s -s "$compat_dir/report.lua" --timeout 10s http://127.0.0.1:8080/hello-world > "$work/$name.wrk"
+    "${client_on[@]}" wrk -t2 -c32 -d30s -s "$compat_dir/report.lua" --timeout 10s http://127.0.0.1:8080/hello-world > "$work/$name.wrk"
     jcmd "$server_pid" JFR.dump name=compat filename="$work/$name.jfr" > /dev/null
     jcmd "$server_pid" JFR.stop name=compat > /dev/null
     stop_server

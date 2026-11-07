@@ -11,7 +11,7 @@ git fetch upstream --tags
 git worktree add ../dw-upstream "$(cat compat/UPSTREAM_BASE)"
 ```
 
-Environment variables: `COMPAT_BASE_TREE` (upstream worktree, default `../dw-upstream`), `COMPAT_M2` (Maven repository directory, default `~/.m2`), `COMPAT_CPUS` (CPU limit, default 6), `COMPAT_CPUSET` (dedicated CPUs instead of a limit), `COMPAT_PERF_ROUNDS` (rounds per side for `--full`, default 2), `COMPAT_STARTUP_SAMPLES` (alternating startups per side for `--full`, default 12).
+Environment variables: `COMPAT_BASE_TREE` (upstream worktree, default `../dw-upstream`), `COMPAT_M2` (Maven repository directory, default `~/.m2`), `COMPAT_CPUS` (CPU limit, default 6), `COMPAT_CPUSET` (dedicated CPUs instead of a limit), `COMPAT_PERF_ROUNDS` (rounds per side for `--full`, default 2), `COMPAT_STARTUP_SAMPLES` (alternating startups per side for `--full`, default 12), `COMPAT_LATENCY_TRIALS` (alternating latency trials per side and method for `--full`, default 8).
 
 For `--full`, set `COMPAT_CPUSET` to at least 6 CPUs that are otherwise idle, such as `COMPAT_CPUSET=8-13`. The server then runs on the first 4 and the load generator on the rest. Under a CPU limit instead, the kernel's throttling adds pauses of tens of milliseconds that hide small differences in latency.
 
@@ -35,7 +35,7 @@ compat/gate.sh                         # everything required for a commit
 | Dependencies | Runtime dependency list of each module | Identical |
 | API | japicmp on each published module, comparing jars because the baseline commit has no published artifacts | No binary or source incompatibility |
 | Footprint (`--full`) | Example jar size, startup to first 200, RSS after 60 s of light load | At most 5% worse |
-| Performance (`--full`) | wrk for 60 s on JSON GET and POST, with JFR, plus the JMH benchmarks | p99 and allocation at most 5% worse |
+| Performance (`--full`) | Latency: alternating 30 s wrk trials of upstream and the fork on JSON GET and POST, without a profiler. Allocation and GC: JFR during 30 s of load. Plus the JMH benchmarks | p99 and allocation at most 5% worse. For p99, a difference must also be statistically significant (one-sided Mann-Whitney test, p < 0.05); one that isn't is reported as WARN |
 
 There is no archetype module on this release line, so that check doesn't apply.
 
