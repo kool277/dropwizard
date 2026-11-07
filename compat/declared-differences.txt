@@ -1,0 +1,2 @@
+# Behaviour that may differ from the upstream baseline. Each line is a path relative to a capture, a space, and the entry
+# in FORK_CHANGES.md that explains it. compare.py fails on differences not listed here and on lines that match nothing.

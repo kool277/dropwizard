@@ -1,0 +1,187 @@
+{
+  "value" : {
+    "admin" : {
+      "healthChecks" : {
+        "maxThreads" : 4,
+        "minThreads" : 1,
+        "servletEnabled" : true,
+        "workQueueSize" : 1
+      },
+      "tasks" : {
+        "printStackTraceOnError" : false
+      }
+    },
+    "database" : null,
+    "health" : {
+      "type" : "default",
+      "delayedShutdownHandlerEnabled" : false,
+      "enabled" : true,
+      "healthCheckUrlPaths" : [ "/health-check" ],
+      "healthChecks" : [ {
+        "critical" : false,
+        "initialState" : true,
+        "name" : "file-system",
+        "schedule" : {
+          "checkInterval" : "10 seconds",
+          "downtimeInterval" : "2 seconds",
+          "failureAttempts" : 1,
+          "initialDelay" : "5 seconds",
+          "successAttempts" : 2
+        },
+        "type" : "READY"
+      } ],
+      "initialOverallState" : true,
+      "responder" : {
+        "type" : "servlet",
+        "cacheControlEnabled" : true,
+        "cacheControlValue" : "no-store"
+      },
+      "responseProvider" : {
+        "type" : "json"
+      },
+      "shutdownWaitPeriod" : "15 seconds"
+    },
+    "httpClient" : null,
+    "jerseyClient" : null,
+    "logging" : {
+      "type" : "default",
+      "appenders" : [ {
+        "type" : "console",
+        "discardingThreshold" : -1,
+        "filterFactories" : [ ],
+        "includeCallerData" : false,
+        "layout" : null,
+        "logFormat" : null,
+        "messageRate" : null,
+        "queueSize" : 256,
+        "target" : "STDOUT",
+        "threshold" : "TRACE",
+        "timeZone" : "UTC"
+      } ],
+      "level" : "INFO",
+      "loggers" : { }
+    },
+    "metrics" : {
+      "frequency" : "1 minute",
+      "reportOnStop" : false,
+      "reporters" : [ ]
+    },
+    "server" : {
+      "type" : "default",
+      "adminConnectors" : [ {
+        "type" : "http",
+        "acceptQueueSize" : null,
+        "acceptorThreads" : null,
+        "bindHost" : null,
+        "bufferPoolIncrement" : "1024 bytes",
+        "headerCacheSize" : "512 bytes",
+        "httpCompliance" : "RFC7230",
+        "idleTimeout" : "30 seconds",
+        "inheritChannel" : false,
+        "inputBufferSize" : "8 kibibytes",
+        "maxBufferPoolSize" : "64 kibibytes",
+        "maxRequestHeaderSize" : "8 kibibytes",
+        "maxResponseHeaderSize" : "8 kibibytes",
+        "minBufferPoolSize" : "64 bytes",
+        "minRequestDataPerSecond" : "0 bytes",
+        "minResponseDataPerSecond" : "0 bytes",
+        "outputBufferSize" : "32 kibibytes",
+        "port" : 8081,
+        "requestCookieCompliance" : "RFC6265",
+        "responseCookieCompliance" : "RFC6265",
+        "reuseAddress" : true,
+        "selectorThreads" : null,
+        "uriCompliance" : "DEFAULT",
+        "useDateHeader" : true,
+        "useForwardedHeaders" : false,
+        "useProxyProtocol" : false,
+        "useServerHeader" : false
+      } ],
+      "adminContextPath" : "/",
+      "adminMaxThreads" : 64,
+      "adminMinThreads" : 1,
+      "allowedMethods" : [ "DELETE", "GET", "HEAD", "OPTIONS", "PATCH", "POST", "PUT" ],
+      "applicationConnectors" : [ {
+        "type" : "http",
+        "acceptQueueSize" : null,
+        "acceptorThreads" : null,
+        "bindHost" : null,
+        "bufferPoolIncrement" : "1024 bytes",
+        "headerCacheSize" : "512 bytes",
+        "httpCompliance" : "RFC7230",
+        "idleTimeout" : "30 seconds",
+        "inheritChannel" : false,
+        "inputBufferSize" : "8 kibibytes",
+        "maxBufferPoolSize" : "64 kibibytes",
+        "maxRequestHeaderSize" : "8 kibibytes",
+        "maxResponseHeaderSize" : "8 kibibytes",
+        "minBufferPoolSize" : "64 bytes",
+        "minRequestDataPerSecond" : "0 bytes",
+        "minResponseDataPerSecond" : "0 bytes",
+        "outputBufferSize" : "32 kibibytes",
+        "port" : 8080,
+        "requestCookieCompliance" : "RFC6265",
+        "responseCookieCompliance" : "RFC6265",
+        "reuseAddress" : true,
+        "selectorThreads" : null,
+        "uriCompliance" : "DEFAULT",
+        "useDateHeader" : true,
+        "useForwardedHeaders" : false,
+        "useProxyProtocol" : false,
+        "useServerHeader" : false
+      } ],
+      "applicationContextPath" : "/",
+      "detailedJsonProcessingExceptionMapper" : false,
+      "dumpAfterStart" : false,
+      "dumpBeforeStop" : false,
+      "enableAdminVirtualThreads" : false,
+      "enableThreadNameFilter" : true,
+      "enableVirtualThreads" : false,
+      "gid" : null,
+      "group" : null,
+      "gzip" : {
+        "bufferSize" : "8 kibibytes",
+        "compressedMimeTypes" : null,
+        "deflateCompressionLevel" : -1,
+        "enabled" : true,
+        "excludedMimeTypes" : null,
+        "excludedPaths" : null,
+        "includedMethods" : null,
+        "includedPaths" : null,
+        "minimumEntitySize" : "256 bytes",
+        "syncFlush" : false
+      },
+      "idleThreadTimeout" : "1 minute",
+      "maxThreads" : 1024,
+      "metricPrefix" : null,
+      "minThreads" : 8,
+      "nofileHardLimit" : null,
+      "nofileSoftLimit" : null,
+      "registerDefaultExceptionMappers" : true,
+      "requestLog" : {
+        "type" : "logback-access",
+        "appenders" : [ {
+          "type" : "console",
+          "discardingThreshold" : -1,
+          "filterFactories" : [ ],
+          "includeCallerData" : false,
+          "layout" : null,
+          "logFormat" : null,
+          "messageRate" : null,
+          "queueSize" : 256,
+          "target" : "STDOUT",
+          "threshold" : "TRACE",
+          "timeZone" : "UTC"
+        } ]
+      },
+      "responseMeteredLevel" : "COARSE",
+      "rootPath" : null,
+      "shutdownGracePeriod" : "30 seconds",
+      "startsAsRoot" : null,
+      "uid" : null,
+      "umask" : null,
+      "user" : null
+    }
+  },
+  "violations" : [ ]
+}

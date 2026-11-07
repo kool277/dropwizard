@@ -1,0 +1,20 @@
+{
+  "value" : {
+    "type" : "syslog",
+    "discardingThreshold" : -1,
+    "facility" : "LOCAL0",
+    "filterFactories" : [ ],
+    "host" : "localhost",
+    "includeCallerData" : false,
+    "includeStackTrace" : true,
+    "layout" : null,
+    "logFormat" : "%app%pid: [%thread] %logger %msg",
+    "messageRate" : null,
+    "port" : 514,
+    "queueSize" : 256,
+    "stackTracePrefix" : "\t",
+    "threshold" : "TRACE",
+    "timeZone" : "UTC"
+  },
+  "violations" : [ ]
+}

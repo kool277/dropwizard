@@ -1,0 +1,11 @@
+usage: java -jar dropwizard-example-VERSION.jar
+       server [-h] [file]
+
+Runs the Dropwizard application as an HTTP server
+
+positional arguments:
+  file                   application configuration file
+
+named arguments:
+  -h, --help             show this help message and exit
+exit=0

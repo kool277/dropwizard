@@ -1,0 +1,3 @@
+io.dropwizard.configuration.ConfigurationParsingException: target/compat-snippets/configuration-031.yml has an error:
+  * Failed to parse configuration at: health.healthChecks.[0]; Cannot construct instance of `io.dropwizard.health.HealthCheckConfiguration` (although at least one Creator exists): no String-argument constructor/factory method to deserialize from String value ('<some health check config>')
+ at [Source: UNKNOWN; byte offset: #UNKNOWN] (through reference chain: CorpusDump$CorpusConfiguration["health"]->io.dropwizard.health.DefaultHealthFactory["healthChecks"]->java.util.ArrayList[0])

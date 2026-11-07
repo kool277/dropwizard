@@ -1,0 +1,69 @@
+usage: java -jar dropwizard-example-VERSION.jar
+       db dump [-h] [--migrations MIGRATIONS-FILE]
+       [--catalog CATALOG] [--schema SCHEMA]
+       [--analytics-enabled ANALYTICS-ENABLED] [-o OUTPUT] [--tables]
+       [--ignore-tables] [--columns] [--ignore-columns] [--views]
+       [--ignore-views] [--primary-keys] [--ignore-primary-keys]
+       [--unique-constraints] [--ignore-unique-constraints] [--indexes]
+       [--ignore-indexes] [--foreign-keys] [--ignore-foreign-keys]
+       [--sequences] [--ignore-sequences] [--data] [--ignore-data] [file]
+
+Generate a dump of the existing database state.
+
+positional arguments:
+  file                   application configuration file
+
+named arguments:
+  -h, --help             show this help message and exit
+  --migrations MIGRATIONS-FILE
+                         the file containing  the  Liquibase migrations for
+                         the application
+  --catalog CATALOG      Specify  the   database   catalog   (use  database
+                         default if omitted)
+  --schema SCHEMA        Specify the database schema  (use database default
+                         if omitted)
+  --analytics-enabled ANALYTICS-ENABLED
+                         This turns on analytics  gathering for that single
+                         occurrence of a command.
+  -o OUTPUT, --output OUTPUT
+                         Write output to <file> instead of stdout
+
+Tables:
+  --tables               Check for added or removed tables (default)
+  --ignore-tables        Ignore tables
+
+Columns:
+  --columns              Check for  added,  removed,  or  modified  columns
+                         (default)
+  --ignore-columns       Ignore columns
+
+Views:
+  --views                Check  for  added,  removed,   or  modified  views
+                         (default)
+  --ignore-views         Ignore views
+
+Primary Keys:
+  --primary-keys         Check for changed primary keys (default)
+  --ignore-primary-keys  Ignore primary keys
+
+Unique Constraints:
+  --unique-constraints   Check for changed unique constraints (default)
+  --ignore-unique-constraints
+                         Ignore unique constraints
+
+Indexes:
+  --indexes              Check for changed indexes (default)
+  --ignore-indexes       Ignore indexes
+
+Foreign Keys:
+  --foreign-keys         Check for changed foreign keys (default)
+  --ignore-foreign-keys  Ignore foreign keys
+
+Sequences:
+  --sequences            Check for changed sequences (default)
+  --ignore-sequences     Ignore sequences
+
+Data:
+  --data                 Check for changed data
+  --ignore-data          Ignore data (default)
+exit=0

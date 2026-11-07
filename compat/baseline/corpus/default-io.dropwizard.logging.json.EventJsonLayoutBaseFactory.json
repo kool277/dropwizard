@@ -1,0 +1,15 @@
+{
+  "value" : {
+    "type" : "json",
+    "additionalFields" : { },
+    "appendLineSeparator" : true,
+    "customFieldNames" : { },
+    "exception" : null,
+    "flattenMdc" : false,
+    "includes" : [ "exception", "level", "loggerName", "marker", "mdc", "message", "threadName", "timestamp" ],
+    "includesMdcKeys" : [ ],
+    "prettyPrint" : false,
+    "timestampFormat" : null
+  },
+  "violations" : [ ]
+}

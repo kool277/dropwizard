@@ -1,0 +1,32 @@
+{
+  "value" : {
+    "type" : "http",
+    "acceptQueueSize" : null,
+    "acceptorThreads" : null,
+    "bindHost" : null,
+    "bufferPoolIncrement" : "1024 bytes",
+    "headerCacheSize" : "512 bytes",
+    "httpCompliance" : "RFC7230",
+    "idleTimeout" : "30 seconds",
+    "inheritChannel" : false,
+    "inputBufferSize" : "8 kibibytes",
+    "maxBufferPoolSize" : "64 kibibytes",
+    "maxRequestHeaderSize" : "8 kibibytes",
+    "maxResponseHeaderSize" : "8 kibibytes",
+    "minBufferPoolSize" : "64 bytes",
+    "minRequestDataPerSecond" : "0 bytes",
+    "minResponseDataPerSecond" : "0 bytes",
+    "outputBufferSize" : "32 kibibytes",
+    "port" : 8080,
+    "requestCookieCompliance" : "RFC6265",
+    "responseCookieCompliance" : "RFC6265",
+    "reuseAddress" : true,
+    "selectorThreads" : null,
+    "uriCompliance" : "DEFAULT",
+    "useDateHeader" : true,
+    "useForwardedHeaders" : false,
+    "useProxyProtocol" : false,
+    "useServerHeader" : false
+  },
+  "violations" : [ ]
+}

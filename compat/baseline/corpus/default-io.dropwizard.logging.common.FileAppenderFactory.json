@@ -1,0 +1,23 @@
+{
+  "value" : {
+    "type" : "file",
+    "archive" : true,
+    "archivedFileCount" : 5,
+    "archivedLogFilenamePattern" : null,
+    "bufferSize" : "8192 bytes",
+    "currentLogFilename" : null,
+    "discardingThreshold" : -1,
+    "filterFactories" : [ ],
+    "immediateFlush" : true,
+    "includeCallerData" : false,
+    "layout" : null,
+    "logFormat" : null,
+    "maxFileSize" : null,
+    "messageRate" : null,
+    "queueSize" : 256,
+    "threshold" : "TRACE",
+    "timeZone" : "UTC",
+    "totalSizeCap" : null
+  },
+  "violations" : [ ]
+}

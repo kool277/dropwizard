@@ -1,0 +1,2 @@
+io.dropwizard.configuration.ConfigurationParsingException: dropwizard-configuration/src/test/resources/factory-test-empty.yml has an error:
+  * Configuration at dropwizard-configuration/src/test/resources/factory-test-empty.yml must not be empty

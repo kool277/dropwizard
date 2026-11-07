@@ -1,0 +1,2 @@
+gc 200
+log-level 200

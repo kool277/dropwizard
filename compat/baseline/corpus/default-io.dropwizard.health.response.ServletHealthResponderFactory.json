@@ -1,0 +1,8 @@
+{
+  "value" : {
+    "type" : "servlet",
+    "cacheControlEnabled" : true,
+    "cacheControlValue" : "no-store"
+  },
+  "violations" : [ ]
+}

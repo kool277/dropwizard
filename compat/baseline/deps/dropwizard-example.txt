@@ -1,0 +1,146 @@
+ch.qos.logback.access:logback-access-common:jar:2.0.15:compile -- module ch.qos.logback.access.common
+ch.qos.logback:logback-classic:jar:1.5.38:compile -- module ch.qos.logback.classic
+ch.qos.logback:logback-core:jar:1.5.38:compile -- module ch.qos.logback.core
+com.fasterxml.jackson.core:jackson-annotations:jar:2.22:compile -- module com.fasterxml.jackson.annotation
+com.fasterxml.jackson.core:jackson-core:jar:2.22.4:compile -- module com.fasterxml.jackson.core
+com.fasterxml.jackson.core:jackson-databind:jar:2.22.4:compile -- module com.fasterxml.jackson.databind
+com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:jar:2.22.4:compile -- module com.fasterxml.jackson.dataformat.yaml
+com.fasterxml.jackson.datatype:jackson-datatype-guava:jar:2.22.4:compile -- module com.fasterxml.jackson.datatype.guava
+com.fasterxml.jackson.datatype:jackson-datatype-hibernate6:jar:2.22.4:compile -- module com.fasterxml.jackson.datatype.hibernate6
+com.fasterxml.jackson.datatype:jackson-datatype-jdk8:jar:2.22.4:compile -- module com.fasterxml.jackson.datatype.jdk8
+com.fasterxml.jackson.datatype:jackson-datatype-jsr310:jar:2.22.4:compile -- module com.fasterxml.jackson.datatype.jsr310
+com.fasterxml.jackson.jakarta.rs:jackson-jakarta-rs-base:jar:2.22.4:compile -- module com.fasterxml.jackson.jakarta.rs.base
+com.fasterxml.jackson.jakarta.rs:jackson-jakarta-rs-json-provider:jar:2.22.4:compile -- module com.fasterxml.jackson.jakarta.rs.json
+com.fasterxml.jackson.module:jackson-module-blackbird:jar:2.22.4:compile -- module com.fasterxml.jackson.module.blackbird
+com.fasterxml.jackson.module:jackson-module-jakarta-xmlbind-annotations:jar:2.22.4:compile -- module com.fasterxml.jackson.module.jakarta.xmlbind
+com.fasterxml.jackson.module:jackson-module-parameter-names:jar:2.22.4:compile -- module com.fasterxml.jackson.module.paramnames
+com.fasterxml:classmate:jar:1.7.3:compile -- module com.fasterxml.classmate
+com.github.ben-manes.caffeine:caffeine:jar:3.3.1:compile -- module com.github.benmanes.caffeine
+com.github.spullara.mustache.java:compiler:jar:0.9.14:compile -- module com.github.mustachejava [auto]
+com.google.errorprone:error_prone_annotations:jar:2.42.0:compile -- module com.google.errorprone.annotations
+com.google.guava:failureaccess:jar:1.0.3:compile -- module com.google.common.util.concurrent.internal
+com.google.guava:guava:jar:33.7.2-jre:compile -- module com.google.common
+com.google.guava:listenablefuture:jar:9999.0-empty-to-avoid-conflict-with-guava:compile -- module listenablefuture (auto)
+com.google.j2objc:j2objc-annotations:jar:3.1:compile -- module com.google.j2objc.annotations
+com.h2database:h2:jar:2.4.240:compile -- module com.h2database [auto]
+com.helger:profiler:jar:1.1.1:compile -- module com.papertrail.profiler [auto]
+com.mattbertolini:liquibase-slf4j:jar:5.1.0:runtime -- module com.mattbertolini.liquibase.logging.slf4j
+com.opencsv:opencsv:jar:5.11.2:compile -- module com.opencsv [auto]
+com.password4j:password4j:jar:1.8.4:compile -- module password4j (auto)
+com.rabbitmq:amqp-client:jar:5.35.0:compile -- module com.rabbitmq.client [auto]
+com.sun.istack:istack-commons-runtime:jar:4.1.1:runtime -- module com.sun.istack.runtime
+commons-io:commons-io:jar:2.19.0:compile -- module org.apache.commons.io
+io.dropwizard.logback:logback-throttling-appender:jar:VERSION:compile -- module io.dropwizard.logback [auto]
+io.dropwizard.metrics:metrics-annotation:jar:VERSION:compile -- module com.codahale.metrics.annotation [auto]
+io.dropwizard.metrics:metrics-caffeine:jar:VERSION:compile -- module com.codahale.metrics.caffeine [auto]
+io.dropwizard.metrics:metrics-core:jar:VERSION:compile -- module com.codahale.metrics [auto]
+io.dropwizard.metrics:metrics-graphite:jar:VERSION:compile -- module com.codahale.metrics.graphite [auto]
+io.dropwizard.metrics:metrics-healthchecks:jar:VERSION:compile -- module com.codahale.metrics.health [auto]
+io.dropwizard.metrics:metrics-jakarta-servlets:jar:VERSION:compile -- module io.dropwizard.metrics.servlets [auto]
+io.dropwizard.metrics:metrics-jersey3:jar:VERSION:compile -- module com.codahale.metrics.jersey3 [auto]
+io.dropwizard.metrics:metrics-jetty12-ee10:jar:VERSION:compile -- module io.dropwizard.metrics.jetty12.ee10 [auto]
+io.dropwizard.metrics:metrics-jetty12:jar:VERSION:compile -- module io.dropwizard.metrics.jetty12 [auto]
+io.dropwizard.metrics:metrics-jmx:jar:VERSION:compile -- module com.codahale.metrics.jmx [auto]
+io.dropwizard.metrics:metrics-json:jar:VERSION:compile -- module com.codahale.metrics.json [auto]
+io.dropwizard.metrics:metrics-jvm:jar:VERSION:compile -- module com.codahale.metrics.jvm [auto]
+io.dropwizard.metrics:metrics-logback:jar:VERSION:compile -- module com.codahale.metrics.logback [auto]
+io.dropwizard:dropwizard-assets:jar:VERSION:compile -- module io.dropwizard.assets [auto]
+io.dropwizard:dropwizard-auth:jar:VERSION:compile -- module io.dropwizard.auth [auto]
+io.dropwizard:dropwizard-configuration:jar:VERSION:compile -- module io.dropwizard.configuration [auto]
+io.dropwizard:dropwizard-core:jar:VERSION:compile -- module io.dropwizard.core [auto]
+io.dropwizard:dropwizard-db:jar:VERSION:compile -- module io.dropwizard.db [auto]
+io.dropwizard:dropwizard-health:jar:VERSION:compile -- module io.dropwizard.health [auto]
+io.dropwizard:dropwizard-hibernate:jar:VERSION:compile -- module io.dropwizard.hibernate [auto]
+io.dropwizard:dropwizard-http2:jar:VERSION:compile -- module io.dropwizard.http2 [auto]
+io.dropwizard:dropwizard-jackson:jar:VERSION:compile -- module io.dropwizard.jackson [auto]
+io.dropwizard:dropwizard-jersey:jar:VERSION:compile -- module io.dropwizard.jersey [auto]
+io.dropwizard:dropwizard-jetty:jar:VERSION:compile -- module io.dropwizard.jetty [auto]
+io.dropwizard:dropwizard-lifecycle:jar:VERSION:compile -- module io.dropwizard.lifecycle [auto]
+io.dropwizard:dropwizard-logging:jar:VERSION:compile -- module io.dropwizard.logging [auto]
+io.dropwizard:dropwizard-metrics-graphite:jar:VERSION:compile -- module io.dropwizard.metrics.graphite [auto]
+io.dropwizard:dropwizard-metrics:jar:VERSION:compile -- module io.dropwizard.metrics [auto]
+io.dropwizard:dropwizard-migrations:jar:VERSION:compile -- module io.dropwizard.migrations [auto]
+io.dropwizard:dropwizard-request-logging:jar:VERSION:compile -- module io.dropwizard.request.logging [auto]
+io.dropwizard:dropwizard-servlets:jar:VERSION:compile -- module io.dropwizard.servlets [auto]
+io.dropwizard:dropwizard-util:jar:VERSION:compile -- module io.dropwizard.util [auto]
+io.dropwizard:dropwizard-validation:jar:VERSION:compile -- module io.dropwizard.validation [auto]
+io.dropwizard:dropwizard-views-freemarker:jar:VERSION:compile -- module io.dropwizard.views.freemarker [auto]
+io.dropwizard:dropwizard-views-mustache:jar:VERSION:compile -- module io.dropwizard.views.mustache [auto]
+io.dropwizard:dropwizard-views:jar:VERSION:compile -- module io.dropwizard.views [auto]
+io.netty:netty-buffer:jar:4.2.17.Final:compile -- module io.netty.buffer
+io.netty:netty-codec-base:jar:4.2.17.Final:compile -- module io.netty.codec
+io.netty:netty-codec-compression:jar:4.2.17.Final:compile -- module io.netty.codec.compression
+io.netty:netty-codec-marshalling:jar:4.2.17.Final:compile -- module io.netty.codec.marshalling
+io.netty:netty-codec-protobuf:jar:4.2.17.Final:compile -- module io.netty.codec.protobuf
+io.netty:netty-codec:jar:4.2.17.Final:compile -- module io.netty.codec.unused
+io.netty:netty-common:jar:4.2.17.Final:compile -- module io.netty.common
+io.netty:netty-handler:jar:4.2.17.Final:compile -- module io.netty.handler
+io.netty:netty-resolver:jar:4.2.17.Final:compile -- module io.netty.resolver
+io.netty:netty-transport-native-unix-common:jar:4.2.17.Final:compile -- module io.netty.transport.unix.common
+io.netty:netty-transport:jar:4.2.17.Final:compile -- module io.netty.transport
+io.smallrye:jandex:jar:3.2.0:runtime -- module org.jboss.jandex [auto]
+jakarta.activation:jakarta.activation-api:jar:2.1.4:compile -- module jakarta.activation
+jakarta.annotation:jakarta.annotation-api:jar:2.1.1:compile -- module jakarta.annotation
+jakarta.el:jakarta.el-api:jar:5.0.1:compile -- module jakarta.el
+jakarta.inject:jakarta.inject-api:jar:2.0.1.MR:compile -- module jakarta.inject
+jakarta.persistence:jakarta.persistence-api:jar:3.1.0:compile -- module jakarta.persistence
+jakarta.servlet:jakarta.servlet-api:jar:6.0.0:compile -- module jakarta.servlet
+jakarta.transaction:jakarta.transaction-api:jar:2.0.1:compile -- module jakarta.transaction
+jakarta.validation:jakarta.validation-api:jar:3.0.2:compile -- module jakarta.validation
+jakarta.ws.rs:jakarta.ws.rs-api:jar:3.1.0:compile -- module jakarta.ws.rs
+jakarta.xml.bind:jakarta.xml.bind-api:jar:4.0.5:compile -- module jakarta.xml.bind
+net.bytebuddy:byte-buddy:jar:1.18.17-jdk5:compile -- module net.bytebuddy
+net.java.dev.jna:jna-jpms:jar:5.14.0:compile -- module com.sun.jna
+net.sourceforge.argparse4j:argparse4j:jar:0.9.0:compile -- module net.sourceforge.argparse4j
+org.antlr:antlr4-runtime:jar:4.13.2:runtime -- module org.antlr.antlr4.runtime [auto]
+org.apache.commons:commons-collections4:jar:4.6.0:compile -- module org.apache.commons.collections4
+org.apache.commons:commons-lang3:jar:3.20.0:compile -- module org.apache.commons.lang3
+org.apache.commons:commons-text:jar:1.15.0:compile -- module org.apache.commons.text
+org.apache.tomcat:tomcat-jdbc:jar:11.0.27:compile -- module tomcat.jdbc (auto)
+org.apache.tomcat:tomcat-juli:jar:11.0.27:compile -- module org.apache.tomcat.juli
+org.eclipse.angus:angus-activation:jar:2.0.0:runtime -- module org.eclipse.angus.activation
+org.eclipse.jetty.ee10:jetty-ee10-servlet:jar:12.1.14:compile -- module org.eclipse.jetty.ee10.servlet
+org.eclipse.jetty.http2:jetty-http2-common:jar:12.1.14:compile -- module org.eclipse.jetty.http2.common
+org.eclipse.jetty.http2:jetty-http2-hpack:jar:12.1.14:compile -- module org.eclipse.jetty.http2.hpack
+org.eclipse.jetty.http2:jetty-http2-server:jar:12.1.14:compile -- module org.eclipse.jetty.http2.server
+org.eclipse.jetty.toolchain.setuid:jetty-setuid-jna:jar:2.0.3:compile -- module org.eclipse.jetty.setuid.jna
+org.eclipse.jetty:jetty-alpn-client:jar:12.1.14:runtime -- module org.eclipse.jetty.alpn.client
+org.eclipse.jetty:jetty-alpn-java-client:jar:12.1.14:runtime -- module org.eclipse.jetty.alpn.java.client
+org.eclipse.jetty:jetty-alpn-java-server:jar:12.1.14:runtime -- module org.eclipse.jetty.alpn.java.server
+org.eclipse.jetty:jetty-alpn-server:jar:12.1.14:compile -- module org.eclipse.jetty.alpn.server
+org.eclipse.jetty:jetty-http:jar:12.1.14:compile -- module org.eclipse.jetty.http
+org.eclipse.jetty:jetty-io:jar:12.1.14:compile -- module org.eclipse.jetty.io
+org.eclipse.jetty:jetty-security:jar:12.1.14:compile -- module org.eclipse.jetty.security
+org.eclipse.jetty:jetty-server:jar:12.1.14:compile -- module org.eclipse.jetty.server
+org.eclipse.jetty:jetty-session:jar:12.1.14:compile -- module org.eclipse.jetty.session
+org.eclipse.jetty:jetty-util:jar:12.1.14:compile -- module org.eclipse.jetty.util
+org.freemarker:freemarker:jar:2.3.35:compile -- module freemarker [auto]
+org.glassfish.expressly:expressly:jar:5.0.0:compile -- module org.glassfish.expressly [auto]
+org.glassfish.hk2.external:aopalliance-repackaged:jar:3.0.6:compile -- module org.aopalliance [auto]
+org.glassfish.hk2:hk2-api:jar:3.0.6:compile -- module org.glassfish.hk2.api [auto]
+org.glassfish.hk2:hk2-locator:jar:3.0.6:runtime -- module org.glassfish.hk2.locator [auto]
+org.glassfish.hk2:hk2-utils:jar:3.0.6:compile -- module org.glassfish.hk2.utilities [auto]
+org.glassfish.hk2:osgi-resource-locator:jar:1.0.3:compile -- module osgi.resource.locator (auto)
+org.glassfish.jaxb:jaxb-core:jar:4.0.2:runtime -- module org.glassfish.jaxb.core
+org.glassfish.jaxb:jaxb-runtime:jar:4.0.2:runtime -- module org.glassfish.jaxb.runtime
+org.glassfish.jaxb:txw2:jar:4.0.2:runtime -- module com.sun.xml.txw2
+org.glassfish.jersey.containers:jersey-container-servlet-core:jar:3.1.12:compile -- module jersey.container.servlet.core (auto)
+org.glassfish.jersey.containers:jersey-container-servlet:jar:3.1.12:runtime -- module jersey.container.servlet (auto)
+org.glassfish.jersey.core:jersey-client:jar:3.1.12:compile -- module jersey.client (auto)
+org.glassfish.jersey.core:jersey-common:jar:3.1.12:compile -- module jersey.common (auto)
+org.glassfish.jersey.core:jersey-server:jar:3.1.12:compile -- module jersey.server (auto)
+org.glassfish.jersey.ext:jersey-bean-validation:jar:3.1.12:compile -- module jersey.bean.validation (auto)
+org.glassfish.jersey.ext:jersey-metainf-services:jar:3.1.12:runtime -- module jersey.metainf.services (auto)
+org.glassfish.jersey.inject:jersey-hk2:jar:3.1.12:runtime -- module jersey.hk2 (auto)
+org.hibernate.common:hibernate-commons-annotations:jar:7.0.3.Final:runtime -- module org.hibernate.commons.annotations
+org.hibernate.orm:hibernate-core:jar:6.6.59.Final:compile -- module org.hibernate.orm.core [auto]
+org.hibernate.validator:hibernate-validator:jar:8.0.5.Final:compile -- module org.hibernate.validator [auto]
+org.javassist:javassist:jar:3.33.0-GA:compile -- module org.javassist [auto]
+org.jboss.logging:jboss-logging:jar:3.6.3.Final:compile -- module org.jboss.logging
+org.jspecify:jspecify:jar:1.0.1:compile -- module org.jspecify
+org.liquibase:liquibase-core:jar:4.33.0:compile -- module liquibase.core [auto]
+org.slf4j:jcl-over-slf4j:jar:2.0.20:runtime -- module org.apache.commons.logging
+org.slf4j:jul-to-slf4j:jar:2.0.20:compile -- module jul.to.slf4j
+org.slf4j:log4j-over-slf4j:jar:2.0.20:runtime -- module log4j
+org.slf4j:slf4j-api:jar:2.0.20:compile -- module org.slf4j
+org.yaml:snakeyaml:jar:2.5:compile -- module org.yaml.snakeyaml

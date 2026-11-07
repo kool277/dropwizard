@@ -1,0 +1,31 @@
+usage: java -jar dropwizard-example-VERSION.jar
+       db rollback [-h] [--migrations MIGRATIONS-FILE]
+       [--catalog CATALOG] [--schema SCHEMA]
+       [--analytics-enabled ANALYTICS-ENABLED] [-n] [-t TAG] [-d DATE]
+       [-c COUNT] [-i CONTEXTS] [file]
+
+Rollback the database schema to a previous version.
+
+positional arguments:
+  file                   application configuration file
+
+named arguments:
+  -h, --help             show this help message and exit
+  --migrations MIGRATIONS-FILE
+                         the file containing  the  Liquibase migrations for
+                         the application
+  --catalog CATALOG      Specify  the   database   catalog   (use  database
+                         default if omitted)
+  --schema SCHEMA        Specify the database schema  (use database default
+                         if omitted)
+  --analytics-enabled ANALYTICS-ENABLED
+                         This turns on analytics  gathering for that single
+                         occurrence of a command.
+  -n, --dry-run          Output the DDL to stdout, don't run it
+  -t TAG, --tag TAG      Rollback to the given tag
+  -d DATE, --date DATE   Rollback to the given date
+  -c COUNT, --count COUNT
+                         Rollback the specified number of change sets
+  -i CONTEXTS, --include CONTEXTS
+                         include change sets from the given context
+exit=0

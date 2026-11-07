@@ -1,0 +1,28 @@
+usage: java -jar dropwizard-example-VERSION.jar
+       db fast-forward [-h] [--migrations MIGRATIONS-FILE]
+       [--catalog CATALOG] [--schema SCHEMA]
+       [--analytics-enabled ANALYTICS-ENABLED] [-n] [-a] [-i CONTEXTS]
+       [file]
+
+Mark the next pending change set as applied without running it
+
+positional arguments:
+  file                   application configuration file
+
+named arguments:
+  -h, --help             show this help message and exit
+  --migrations MIGRATIONS-FILE
+                         the file containing  the  Liquibase migrations for
+                         the application
+  --catalog CATALOG      Specify  the   database   catalog   (use  database
+                         default if omitted)
+  --schema SCHEMA        Specify the database schema  (use database default
+                         if omitted)
+  --analytics-enabled ANALYTICS-ENABLED
+                         This turns on analytics  gathering for that single
+                         occurrence of a command.
+  -n, --dry-run          output the DDL to stdout, don't run it
+  -a, --all              mark all pending change sets as applied
+  -i CONTEXTS, --include CONTEXTS
+                         include change sets from the given context
+exit=0

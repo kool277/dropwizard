@@ -1,0 +1,20 @@
+{
+  "value" : {
+    "type" : "default",
+    "delayedShutdownHandlerEnabled" : false,
+    "enabled" : true,
+    "healthCheckUrlPaths" : [ "/health-check" ],
+    "healthChecks" : [ ],
+    "initialOverallState" : true,
+    "responder" : {
+      "type" : "servlet",
+      "cacheControlEnabled" : true,
+      "cacheControlValue" : "no-store"
+    },
+    "responseProvider" : {
+      "type" : "json"
+    },
+    "shutdownWaitPeriod" : "15 seconds"
+  },
+  "violations" : [ ]
+}

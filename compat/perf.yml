@@ -1,0 +1,26 @@
+# Used for performance runs: no HTTPS, and no logging on the request path, so that the framework is what is measured.
+template: Hello, %s!
+defaultName: Stranger
+database:
+  driverClass: org.h2.Driver
+  user: sa
+  password: sa
+  url: jdbc:h2:/tmp/compat-perf
+server:
+  applicationConnectors:
+    - type: http
+      port: 8080
+  adminConnectors:
+    - type: http
+      port: 8081
+  requestLog:
+    appenders: []
+logging:
+  level: INFO
+  loggers:
+    com.example.helloworld: WARN
+  appenders:
+    - type: console
+viewRendererConfiguration:
+  freemarker:
+    strict_syntax: true

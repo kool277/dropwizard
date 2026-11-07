@@ -1,0 +1,1 @@
+N.N.N.N - - [N/Nov/N:N:N:N +N] "GET /hello-world?name=compat HTTP/N.N" N N "-" "curl/N.N.N" N

@@ -1,0 +1,22 @@
+{
+  "value" : {
+    "certAlias" : null,
+    "keyStorePassword" : null,
+    "keyStorePath" : null,
+    "keyStoreProvider" : null,
+    "keyStoreType" : "JKS",
+    "protocol" : "TLSv1.2",
+    "provider" : null,
+    "supportedCiphers" : null,
+    "supportedProtocols" : null,
+    "trustSelfSignedCertificates" : false,
+    "trustStorePassword" : null,
+    "trustStorePath" : null,
+    "trustStoreProvider" : null,
+    "trustStoreType" : "JKS",
+    "validKeyStorePassword" : true,
+    "validTrustStorePassword" : true,
+    "verifyHostname" : true
+  },
+  "violations" : [ ]
+}

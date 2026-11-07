@@ -1,0 +1,19 @@
+{
+  "value" : {
+    "connectionRequestTimeout" : "500 milliseconds",
+    "connectionTimeout" : "500 milliseconds",
+    "cookiesEnabled" : false,
+    "keepAlive" : "0 milliseconds",
+    "maxConnections" : 1024,
+    "maxConnectionsPerRoute" : 1024,
+    "protocolUpgradeEnabled" : true,
+    "proxy" : null,
+    "retries" : 0,
+    "timeToLive" : "1 hour",
+    "timeout" : "500 milliseconds",
+    "tls" : null,
+    "userAgent" : null,
+    "validateAfterInactivityPeriod" : "0 microseconds"
+  },
+  "violations" : [ ]
+}

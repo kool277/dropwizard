@@ -1,0 +1,13 @@
+usage: java -jar dropwizard-example-VERSION.jar
+       db [-h]
+       {calculate-checksum,clear-checksums,drop-all,dump,fast-forward,generate-docs,locks,migrate,prepare-rollback,rollback,status,tag,test}
+       ...
+
+Run database migration tasks
+
+positional arguments:
+  {calculate-checksum,clear-checksums,drop-all,dump,fast-forward,generate-docs,locks,migrate,prepare-rollback,rollback,status,tag,test}
+
+named arguments:
+  -h, --help             show this help message and exit
+exit=0

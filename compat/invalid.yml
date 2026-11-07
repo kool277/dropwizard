@@ -1,0 +1,2 @@
+# check must reject this and exit non-zero.
+unknownKey: 1

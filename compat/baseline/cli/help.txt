@@ -1,0 +1,11 @@
+usage: java -jar dropwizard-example-VERSION.jar
+       [-h] [-v] {server,check,render,db} ...
+
+positional arguments:
+  {server,check,render,db}
+                         available commands
+
+named arguments:
+  -h, --help             show this help message and exit
+  -v, --version          show the application version and exit
+exit=0

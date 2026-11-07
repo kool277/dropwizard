@@ -1,0 +1,19 @@
+{
+  "value" : {
+    "type" : "graphite",
+    "durationUnit" : "MILLISECONDS",
+    "excludes" : [ ],
+    "excludesAttributes" : [ ],
+    "frequency" : null,
+    "host" : "localhost",
+    "includes" : [ ],
+    "includesAttributes" : [ "COUNT", "M15_RATE", "M1_RATE", "M5_RATE", "MAX", "MEAN", "MEAN_RATE", "MIN", "P50", "P75", "P95", "P98", "P99", "P999", "STDDEV" ],
+    "port" : 2003,
+    "prefix" : "",
+    "rateUnit" : "SECONDS",
+    "transport" : "tcp",
+    "useRegexFilters" : false,
+    "useSubstringMatching" : false
+  },
+  "violations" : [ ]
+}

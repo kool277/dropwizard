@@ -1,0 +1,7 @@
+/ 200
+/ping 200
+/threads 200
+/metrics 200
+/healthcheck 200
+/pprof 200
+/tasks/does-not-exist 404

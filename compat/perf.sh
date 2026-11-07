@@ -1,0 +1,63 @@
+#!/usr/bin/env bash
+# Measures footprint and performance of a tree that capture.sh has built.
+# Usage: perf.sh <tree> <output json> [--jmh]
+set -uo pipefail
+. "$(dirname "$0")/lib.sh"
+tree="$(require_tree "$1")" || exit 2
+json="$2"
+jmh="${3:-}"
+work="$(mktemp -d)"
+trap 'kill -9 $(jobs -p) 2>/dev/null; rm -rf "$work"' EXIT
+jar="$(example_jar "$tree")"
+cd "$work" || exit 2
+rm -f /tmp/compat-perf.*
+java -Xmx512m -jar "$jar" db migrate "$compat_dir/perf.yml" > "$work/migrate.log" 2>&1
+
+start_server() {
+    local started
+    started="$(date +%s%3N)"
+    java -Xmx512m -Xlog:gc:file="$work/gc.log" -jar "$jar" server "$compat_dir/perf.yml" > "$work/server.log" 2>&1 &
+    server_pid=$!
+    wait_for_200 http://127.0.0.1:8081/healthcheck "$started"
+}
+
+stop_server() {
+    kill -TERM "$server_pid"
+    wait "$server_pid" 2>/dev/null
+}
+
+startups=()
+for _ in 1 2 3; do
+    startups+=("$(start_server)")
+    stop_server
+done
+
+# Light load, then resident memory
+start_server > /dev/null
+wrk -t1 -c2 -d60s --timeout 10s http://127.0.0.1:8080/hello-world > /dev/null
+rss_kb="$(awk '/VmRSS/{print $2}' "/proc/$server_pid/status")"
+stop_server
+
+# Heavy load, with JFR recording only the measured window
+measure() {
+    local name="$1"
+    export COMPAT_POST="$2"
+    start_server > /dev/null
+    wrk -t2 -c32 -d15s -s "$compat_dir/report.lua" --timeout 10s http://127.0.0.1:8080/hello-world > /dev/null
+    jcmd "$server_pid" JFR.start name=compat settings=profile > /dev/null
+    wrk -t2 -c32 -d60s -s "$compat_dir/report.lua" --timeout 10s http://127.0.0.1:8080/hello-world > "$work/$name.wrk"
+    jcmd "$server_pid" JFR.dump name=compat filename="$work/$name.jfr" > /dev/null
+    jcmd "$server_pid" JFR.stop name=compat > /dev/null
+    stop_server
+    jfr summary "$work/$name.jfr" | awk '$1=="jdk.GarbageCollection"{print $2}' > "$work/$name.gc"
+    jfr print --events jdk.ObjectAllocationSample "$work/$name.jfr" | grep 'weight =' > "$work/$name.weights"
+}
+measure get 0
+measure post 1
+
+if [ "$jmh" = "--jmh" ]; then
+    jmh_cp="$(module_jar "$tree" dropwizard-benchmarks):$(cat "$tree/dropwizard-benchmarks/target/compat-cp.txt")"
+    java -cp "$jmh_cp" org.openjdk.jmh.Main -f 1 -wi 3 -i 5 -w 5s -r 5s -rf json -rff "$work/jmh.json" > "$work/jmh.log" 2>&1
+fi
+
+python3 "$compat_dir/perf_json.py" "$work" "$json" "$jar" "${startups[*]}" "$rss_kb"

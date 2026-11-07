@@ -1,0 +1,29 @@
+usage: java -jar dropwizard-example-VERSION.jar
+       db prepare-rollback [-h] [--migrations MIGRATIONS-FILE]
+       [--catalog CATALOG] [--schema SCHEMA]
+       [--analytics-enabled ANALYTICS-ENABLED] [-c COUNT] [-i CONTEXTS]
+       [file]
+
+Generate rollback DDL scripts for pending change sets.
+
+positional arguments:
+  file                   application configuration file
+
+named arguments:
+  -h, --help             show this help message and exit
+  --migrations MIGRATIONS-FILE
+                         the file containing  the  Liquibase migrations for
+                         the application
+  --catalog CATALOG      Specify  the   database   catalog   (use  database
+                         default if omitted)
+  --schema SCHEMA        Specify the database schema  (use database default
+                         if omitted)
+  --analytics-enabled ANALYTICS-ENABLED
+                         This turns on analytics  gathering for that single
+                         occurrence of a command.
+  -c COUNT, --count COUNT
+                         limit script to  the  specified  number of pending
+                         change sets
+  -i CONTEXTS, --include CONTEXTS
+                         include change sets from the given context
+exit=0

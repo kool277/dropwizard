@@ -1,0 +1,15 @@
+{
+  "value" : {
+    "type" : "access-json",
+    "additionalFields" : { },
+    "appendLineSeparator" : true,
+    "customFieldNames" : { },
+    "includes" : [ "contentLength", "method", "protocol", "remoteAddress", "remoteUser", "requestTime", "requestUri", "statusCode", "timestamp", "userAgent" ],
+    "prettyPrint" : false,
+    "requestAttributes" : [ ],
+    "requestHeaders" : [ ],
+    "responseHeaders" : [ ],
+    "timestampFormat" : null
+  },
+  "violations" : [ ]
+}

@@ -1,0 +1,18 @@
+{
+  "value" : {
+    "type" : "console",
+    "durationUnit" : "MILLISECONDS",
+    "excludes" : [ ],
+    "excludesAttributes" : [ ],
+    "frequency" : null,
+    "includes" : [ ],
+    "includesAttributes" : [ "COUNT", "M15_RATE", "M1_RATE", "M5_RATE", "MAX", "MEAN", "MEAN_RATE", "MIN", "P50", "P75", "P95", "P98", "P99", "P999", "STDDEV" ],
+    "locale" : "en_US",
+    "output" : "STDOUT",
+    "rateUnit" : "SECONDS",
+    "timeZone" : "UTC",
+    "useRegexFilters" : false,
+    "useSubstringMatching" : false
+  },
+  "violations" : [ ]
+}

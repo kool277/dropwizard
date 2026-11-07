@@ -1,0 +1,11 @@
+usage: java -jar dropwizard-example-VERSION.jar
+       check [-h] [file]
+
+Parses and validates the configuration file
+
+positional arguments:
+  file                   application configuration file
+
+named arguments:
+  -h, --help             show this help message and exit
+exit=0

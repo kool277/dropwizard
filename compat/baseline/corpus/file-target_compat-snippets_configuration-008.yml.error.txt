@@ -1,0 +1,11 @@
+io.dropwizard.configuration.ConfigurationParsingException: target/compat-snippets/configuration-008.yml has an error:
+  * Malformed YAML at line: 5, column: 17; while scanning a simple key
+ in 'reader', line 6, column 7:
+          ....
+          ^
+could not find expected ':'
+ in 'reader', line 7, column 7:
+          keyStorePath: /path/to/file
+          ^
+
+ at [Source: (FileInputStream); line: 5, column: 17]

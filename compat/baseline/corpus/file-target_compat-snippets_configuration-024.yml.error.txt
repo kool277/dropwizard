@@ -1,0 +1,3 @@
+io.dropwizard.configuration.ConfigurationParsingException: target/compat-snippets/configuration-024.yml has an error:
+  * Failed to parse configuration at: metrics.reporters.[0]; Could not resolve type id '<type>' as a subtype of `io.dropwizard.metrics.common.ReporterFactory`: known type ids = [console, csv, graphite, log] (for POJO property 'reporters')
+ at [Source: UNKNOWN; byte offset: #UNKNOWN] (through reference chain: CorpusDump$CorpusConfiguration["metrics"]->io.dropwizard.metrics.common.MetricsFactory["reporters"]->java.util.ArrayList[0])

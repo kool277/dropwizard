@@ -1,0 +1,17 @@
+{
+  "deadlocks": [
+    "duration",
+    "healthy",
+    "timestamp"
+  ],
+  "hibernate": [
+    "duration",
+    "healthy",
+    "timestamp"
+  ],
+  "template": [
+    "duration",
+    "healthy",
+    "timestamp"
+  ]
+}

@@ -1,0 +1,25 @@
+usage: java -jar dropwizard-example-VERSION.jar
+       db calculate-checksum [-h] [--migrations MIGRATIONS-FILE]
+       [--catalog CATALOG] [--schema SCHEMA]
+       [--analytics-enabled ANALYTICS-ENABLED] [file] id author
+
+Calculates and prints a checksum for a change set
+
+positional arguments:
+  file                   application configuration file
+  id                     change set id
+  author                 author name
+
+named arguments:
+  -h, --help             show this help message and exit
+  --migrations MIGRATIONS-FILE
+                         the file containing  the  Liquibase migrations for
+                         the application
+  --catalog CATALOG      Specify  the   database   catalog   (use  database
+                         default if omitted)
+  --schema SCHEMA        Specify the database schema  (use database default
+                         if omitted)
+  --analytics-enabled ANALYTICS-ENABLED
+                         This turns on analytics  gathering for that single
+                         occurrence of a command.
+exit=0

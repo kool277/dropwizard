@@ -1,0 +1,17 @@
+{
+  "value" : {
+    "type" : "csv",
+    "durationUnit" : "MILLISECONDS",
+    "excludes" : [ ],
+    "excludesAttributes" : [ ],
+    "file" : null,
+    "frequency" : null,
+    "includes" : [ ],
+    "includesAttributes" : [ "COUNT", "M15_RATE", "M1_RATE", "M5_RATE", "MAX", "MEAN", "MEAN_RATE", "MIN", "P50", "P75", "P95", "P98", "P99", "P999", "STDDEV" ],
+    "locale" : "en_US",
+    "rateUnit" : "SECONDS",
+    "useRegexFilters" : false,
+    "useSubstringMatching" : false
+  },
+  "violations" : [ ]
+}

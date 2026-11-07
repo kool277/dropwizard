@@ -1,0 +1,3 @@
+io.dropwizard.configuration.ConfigurationParsingException: dropwizard-configuration/src/test/resources/factory-test-malformed.yml has an error:
+  * Failed to parse configuration; Cannot construct instance of `CorpusDump$CorpusConfiguration` (although at least one Creator exists): no String-argument constructor/factory method to deserialize from String value ('j&&&&')
+ at [Source: UNKNOWN; byte offset: #UNKNOWN]

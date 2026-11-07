@@ -1,0 +1,20 @@
+{
+  "value" : {
+    "type" : "classic",
+    "appenders" : [ {
+      "type" : "console",
+      "discardingThreshold" : -1,
+      "filterFactories" : [ ],
+      "includeCallerData" : false,
+      "layout" : null,
+      "logFormat" : null,
+      "messageRate" : null,
+      "queueSize" : 256,
+      "target" : "STDOUT",
+      "threshold" : "TRACE",
+      "timeZone" : "UTC"
+    } ],
+    "timeZone" : "UTC"
+  },
+  "violations" : [ ]
+}

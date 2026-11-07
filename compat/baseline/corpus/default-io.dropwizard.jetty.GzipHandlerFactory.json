@@ -1,0 +1,15 @@
+{
+  "value" : {
+    "bufferSize" : "8 kibibytes",
+    "compressedMimeTypes" : null,
+    "deflateCompressionLevel" : -1,
+    "enabled" : true,
+    "excludedMimeTypes" : null,
+    "excludedPaths" : null,
+    "includedMethods" : null,
+    "includedPaths" : null,
+    "minimumEntitySize" : "256 bytes",
+    "syncFlush" : false
+  },
+  "violations" : [ ]
+}

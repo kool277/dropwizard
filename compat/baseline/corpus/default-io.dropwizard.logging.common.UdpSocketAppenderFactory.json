@@ -1,0 +1,17 @@
+{
+  "value" : {
+    "type" : "udp",
+    "discardingThreshold" : -1,
+    "filterFactories" : [ ],
+    "host" : "localhost",
+    "includeCallerData" : false,
+    "layout" : null,
+    "logFormat" : null,
+    "messageRate" : null,
+    "port" : 514,
+    "queueSize" : 256,
+    "threshold" : "TRACE",
+    "timeZone" : "UTC"
+  },
+  "violations" : [ ]
+}

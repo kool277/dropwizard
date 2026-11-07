@@ -1,0 +1,20 @@
+{
+  "value" : {
+    "type" : "tcp",
+    "connectionTimeout" : "500 milliseconds",
+    "discardingThreshold" : -1,
+    "filterFactories" : [ ],
+    "host" : "localhost",
+    "immediateFlush" : true,
+    "includeCallerData" : false,
+    "layout" : null,
+    "logFormat" : null,
+    "messageRate" : null,
+    "port" : 4560,
+    "queueSize" : 256,
+    "sendBufferSize" : "8 kibibytes",
+    "threshold" : "TRACE",
+    "timeZone" : "UTC"
+  },
+  "violations" : [ ]
+}

@@ -1,0 +1,8 @@
+[
+  "counters",
+  "gauges",
+  "histograms",
+  "meters",
+  "timers",
+  "version"
+]

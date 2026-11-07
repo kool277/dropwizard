@@ -1,0 +1,11 @@
+invalid.yml has an error:
+  * Unrecognized field at: unknownKey
+    Did you mean?:
+      - server
+      - template
+      - database
+      - logging
+      - admin
+        [N more]
+
+exit=1

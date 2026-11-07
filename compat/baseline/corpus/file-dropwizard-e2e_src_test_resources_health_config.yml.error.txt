@@ -1,0 +1,2 @@
+io.dropwizard.configuration.ConfigurationParsingException: dropwizard-e2e/src/test/resources/health/config.yml has an error:
+  * Incorrect type of value at: server.connector.port; is of type: String, expected: int

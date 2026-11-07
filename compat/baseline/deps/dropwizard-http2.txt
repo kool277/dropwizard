@@ -1,0 +1,44 @@
+com.fasterxml.jackson.core:jackson-annotations:jar:2.22:compile -- module com.fasterxml.jackson.annotation
+com.fasterxml.jackson.core:jackson-core:jar:2.22.4:compile -- module com.fasterxml.jackson.core
+com.fasterxml.jackson.core:jackson-databind:jar:2.22.4:compile -- module com.fasterxml.jackson.databind
+com.fasterxml.jackson.datatype:jackson-datatype-guava:jar:2.22.4:compile -- module com.fasterxml.jackson.datatype.guava
+com.fasterxml.jackson.datatype:jackson-datatype-jdk8:jar:2.22.4:compile -- module com.fasterxml.jackson.datatype.jdk8
+com.fasterxml.jackson.datatype:jackson-datatype-jsr310:jar:2.22.4:compile -- module com.fasterxml.jackson.datatype.jsr310
+com.fasterxml.jackson.module:jackson-module-blackbird:jar:2.22.4:compile -- module com.fasterxml.jackson.module.blackbird
+com.fasterxml.jackson.module:jackson-module-parameter-names:jar:2.22.4:compile -- module com.fasterxml.jackson.module.paramnames
+com.fasterxml:classmate:jar:1.7.3:compile -- module com.fasterxml.classmate
+com.github.ben-manes.caffeine:caffeine:jar:3.3.1:compile -- module com.github.benmanes.caffeine
+com.google.errorprone:error_prone_annotations:jar:2.42.0:compile -- module com.google.errorprone.annotations
+com.google.guava:failureaccess:jar:1.0.3:compile -- module com.google.common.util.concurrent.internal
+com.google.guava:guava:jar:33.7.2-jre:compile -- module com.google.common
+com.google.guava:listenablefuture:jar:9999.0-empty-to-avoid-conflict-with-guava:compile -- module listenablefuture (auto)
+com.google.j2objc:j2objc-annotations:jar:3.1:compile -- module com.google.j2objc.annotations
+io.dropwizard.metrics:metrics-annotation:jar:VERSION:compile -- module com.codahale.metrics.annotation [auto]
+io.dropwizard.metrics:metrics-core:jar:VERSION:compile -- module com.codahale.metrics [auto]
+io.dropwizard.metrics:metrics-jetty12:jar:VERSION:compile -- module io.dropwizard.metrics.jetty12 [auto]
+io.dropwizard:dropwizard-jackson:jar:VERSION:compile -- module io.dropwizard.jackson [auto]
+io.dropwizard:dropwizard-jetty:jar:VERSION:compile -- module io.dropwizard.jetty [auto]
+io.dropwizard:dropwizard-util:jar:VERSION:compile -- module io.dropwizard.util [auto]
+io.dropwizard:dropwizard-validation:jar:VERSION:compile -- module io.dropwizard.validation [auto]
+jakarta.el:jakarta.el-api:jar:5.0.1:runtime -- module jakarta.el
+jakarta.servlet:jakarta.servlet-api:jar:6.0.0:compile -- module jakarta.servlet
+jakarta.validation:jakarta.validation-api:jar:3.0.2:compile -- module jakarta.validation
+org.eclipse.jetty.ee10:jetty-ee10-servlet:jar:12.1.14:compile -- module org.eclipse.jetty.ee10.servlet
+org.eclipse.jetty.http2:jetty-http2-common:jar:12.1.14:compile -- module org.eclipse.jetty.http2.common
+org.eclipse.jetty.http2:jetty-http2-hpack:jar:12.1.14:compile -- module org.eclipse.jetty.http2.hpack
+org.eclipse.jetty.http2:jetty-http2-server:jar:12.1.14:compile -- module org.eclipse.jetty.http2.server
+org.eclipse.jetty:jetty-alpn-client:jar:12.1.14:runtime -- module org.eclipse.jetty.alpn.client
+org.eclipse.jetty:jetty-alpn-java-client:jar:12.1.14:runtime -- module org.eclipse.jetty.alpn.java.client
+org.eclipse.jetty:jetty-alpn-java-server:jar:12.1.14:runtime -- module org.eclipse.jetty.alpn.java.server
+org.eclipse.jetty:jetty-alpn-server:jar:12.1.14:compile -- module org.eclipse.jetty.alpn.server
+org.eclipse.jetty:jetty-http:jar:12.1.14:compile -- module org.eclipse.jetty.http
+org.eclipse.jetty:jetty-io:jar:12.1.14:compile -- module org.eclipse.jetty.io
+org.eclipse.jetty:jetty-security:jar:12.1.14:compile -- module org.eclipse.jetty.security
+org.eclipse.jetty:jetty-server:jar:12.1.14:compile -- module org.eclipse.jetty.server
+org.eclipse.jetty:jetty-session:jar:12.1.14:compile -- module org.eclipse.jetty.session
+org.eclipse.jetty:jetty-util:jar:12.1.14:compile -- module org.eclipse.jetty.util
+org.glassfish.expressly:expressly:jar:5.0.0:runtime -- module org.glassfish.expressly [auto]
+org.hibernate.validator:hibernate-validator:jar:8.0.5.Final:compile -- module org.hibernate.validator [auto]
+org.jboss.logging:jboss-logging:jar:3.6.3.Final:compile -- module org.jboss.logging
+org.jspecify:jspecify:jar:1.0.1:compile -- module org.jspecify
+org.slf4j:slf4j-api:jar:2.0.20:compile -- module org.slf4j

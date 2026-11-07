@@ -1,0 +1,25 @@
+{
+  "value" : {
+    "chunkedEncodingEnabled" : true,
+    "connectionRequestTimeout" : "500 milliseconds",
+    "connectionTimeout" : "500 milliseconds",
+    "cookiesEnabled" : false,
+    "gzipEnabled" : true,
+    "gzipEnabledForRequests" : true,
+    "keepAlive" : "0 milliseconds",
+    "maxConnections" : 1024,
+    "maxConnectionsPerRoute" : 1024,
+    "maxThreads" : 128,
+    "minThreads" : 1,
+    "protocolUpgradeEnabled" : true,
+    "proxy" : null,
+    "retries" : 0,
+    "timeToLive" : "1 hour",
+    "timeout" : "500 milliseconds",
+    "tls" : null,
+    "userAgent" : null,
+    "validateAfterInactivityPeriod" : "0 microseconds",
+    "workQueueSize" : 8
+  },
+  "violations" : [ ]
+}

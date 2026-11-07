@@ -1,0 +1,3 @@
+io.dropwizard.configuration.ConfigurationParsingException: target/compat-snippets/configuration-017.yml has an error:
+  * Failed to parse configuration at: logging.appenders.[0].filterFactories.[0]; Could not resolve type id 'URI' as a subtype of `io.dropwizard.logging.common.filter.FilterFactory<ch.qos.logback.classic.spi.ILoggingEvent>`: known type ids = [uri] (for POJO property 'filterFactories')
+ at [Source: UNKNOWN; byte offset: #UNKNOWN] (through reference chain: CorpusDump$CorpusConfiguration["logging"]->io.dropwizard.logging.common.DefaultLoggingFactory["appenders"]->java.util.ArrayList[0]->io.dropwizard.logging.common.SyslogAppenderFactory["filterFactories"]->java.util.ArrayList[0])

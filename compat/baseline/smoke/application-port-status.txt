@@ -1,0 +1,5 @@
+/ping 404
+/threads 404
+/metrics 404
+/healthcheck 404
+/tasks/gc 404

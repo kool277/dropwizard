@@ -1,0 +1,270 @@
+{
+  "value" : {
+    "admin" : {
+      "healthChecks" : {
+        "maxThreads" : 4,
+        "minThreads" : 1,
+        "servletEnabled" : true,
+        "workQueueSize" : 1
+      },
+      "tasks" : {
+        "printStackTraceOnError" : false
+      }
+    },
+    "database" : {
+      "abandonWhenPercentageFull" : 0,
+      "alternateUsernamesAllowed" : false,
+      "autoCommentsEnabled" : true,
+      "autoCommitByDefault" : null,
+      "checkConnectionOnBorrow" : false,
+      "checkConnectionOnConnect" : true,
+      "checkConnectionOnReturn" : false,
+      "checkConnectionWhileIdle" : true,
+      "commitOnReturn" : false,
+      "defaultCatalog" : null,
+      "defaultTransactionIsolation" : "DEFAULT",
+      "driverClass" : "com.mysql.cj.jdbc.Driver",
+      "evictionInterval" : "5 seconds",
+      "ignoreExceptionOnPreLoad" : false,
+      "initialSize" : 10,
+      "initializationQuery" : null,
+      "jdbcInterceptors" : null,
+      "logAbandonedConnections" : false,
+      "logValidationErrors" : false,
+      "maxConnectionAge" : null,
+      "maxSize" : 100,
+      "maxWaitForConnection" : "30 seconds",
+      "minIdleTime" : "1 minute",
+      "minSize" : 10,
+      "password" : null,
+      "properties" : {
+        "hibernate.dialect" : "org.hibernate.dialect.MySQLDialect"
+      },
+      "readOnlyByDefault" : null,
+      "removeAbandoned" : false,
+      "removeAbandonedTimeout" : "60 seconds",
+      "rollbackOnReturn" : false,
+      "url" : "",
+      "useFairQueue" : true,
+      "user" : null,
+      "validationInterval" : "30 seconds",
+      "validationQuery" : "/* Health Check */ SELECT 1",
+      "validationQueryTimeout" : null,
+      "validatorClassName" : null
+    },
+    "health" : {
+      "type" : "default",
+      "delayedShutdownHandlerEnabled" : true,
+      "enabled" : true,
+      "healthCheckUrlPaths" : [ "/health-check" ],
+      "healthChecks" : [ {
+        "critical" : false,
+        "initialState" : true,
+        "name" : "deadlocks",
+        "schedule" : {
+          "checkInterval" : "5 seconds",
+          "downtimeInterval" : "30 seconds",
+          "failureAttempts" : 3,
+          "initialDelay" : "5 seconds",
+          "successAttempts" : 2
+        },
+        "type" : "ALIVE"
+      }, {
+        "critical" : true,
+        "initialState" : true,
+        "name" : "hibernate",
+        "schedule" : {
+          "checkInterval" : "5 seconds",
+          "downtimeInterval" : "30 seconds",
+          "failureAttempts" : 3,
+          "initialDelay" : "5 seconds",
+          "successAttempts" : 2
+        },
+        "type" : "READY"
+      }, {
+        "critical" : true,
+        "initialState" : true,
+        "name" : "template",
+        "schedule" : {
+          "checkInterval" : "1 second",
+          "downtimeInterval" : "2 seconds",
+          "failureAttempts" : 3,
+          "initialDelay" : "1 second",
+          "successAttempts" : 2
+        },
+        "type" : "READY"
+      } ],
+      "initialOverallState" : true,
+      "responder" : {
+        "type" : "servlet",
+        "cacheControlEnabled" : true,
+        "cacheControlValue" : "no-store"
+      },
+      "responseProvider" : {
+        "type" : "json"
+      },
+      "shutdownWaitPeriod" : "1 second"
+    },
+    "httpClient" : null,
+    "jerseyClient" : null,
+    "logging" : {
+      "type" : "default",
+      "appenders" : [ {
+        "type" : "console",
+        "discardingThreshold" : -1,
+        "filterFactories" : [ ],
+        "includeCallerData" : false,
+        "layout" : null,
+        "logFormat" : null,
+        "messageRate" : null,
+        "queueSize" : 256,
+        "target" : "STDOUT",
+        "threshold" : "TRACE",
+        "timeZone" : "UTC"
+      }, {
+        "type" : "file",
+        "archive" : true,
+        "archivedFileCount" : 7,
+        "archivedLogFilenamePattern" : "./logs/application-%d-%i.log.gz",
+        "bufferSize" : "8192 bytes",
+        "currentLogFilename" : "./logs/application.log",
+        "discardingThreshold" : -1,
+        "filterFactories" : [ ],
+        "immediateFlush" : true,
+        "includeCallerData" : false,
+        "layout" : null,
+        "logFormat" : null,
+        "maxFileSize" : "1 mebibyte",
+        "messageRate" : null,
+        "queueSize" : 256,
+        "threshold" : "TRACE",
+        "timeZone" : "UTC",
+        "totalSizeCap" : null
+      } ],
+      "level" : "INFO",
+      "loggers" : { }
+    },
+    "metrics" : {
+      "frequency" : "1 minute",
+      "reportOnStop" : false,
+      "reporters" : [ ]
+    },
+    "server" : {
+      "type" : "default",
+      "adminConnectors" : [ {
+        "type" : "http",
+        "acceptQueueSize" : null,
+        "acceptorThreads" : null,
+        "bindHost" : null,
+        "bufferPoolIncrement" : "1024 bytes",
+        "headerCacheSize" : "512 bytes",
+        "httpCompliance" : "RFC7230",
+        "idleTimeout" : "30 seconds",
+        "inheritChannel" : false,
+        "inputBufferSize" : "8 kibibytes",
+        "maxBufferPoolSize" : "64 kibibytes",
+        "maxRequestHeaderSize" : "8 kibibytes",
+        "maxResponseHeaderSize" : "8 kibibytes",
+        "minBufferPoolSize" : "64 bytes",
+        "minRequestDataPerSecond" : "0 bytes",
+        "minResponseDataPerSecond" : "0 bytes",
+        "outputBufferSize" : "32 kibibytes",
+        "port" : 0,
+        "requestCookieCompliance" : "RFC6265",
+        "responseCookieCompliance" : "RFC6265",
+        "reuseAddress" : true,
+        "selectorThreads" : null,
+        "uriCompliance" : "DEFAULT",
+        "useDateHeader" : true,
+        "useForwardedHeaders" : false,
+        "useProxyProtocol" : false,
+        "useServerHeader" : false
+      } ],
+      "adminContextPath" : "/",
+      "adminMaxThreads" : 64,
+      "adminMinThreads" : 1,
+      "allowedMethods" : [ "DELETE", "GET", "HEAD", "OPTIONS", "PATCH", "POST", "PUT" ],
+      "applicationConnectors" : [ {
+        "type" : "http",
+        "acceptQueueSize" : null,
+        "acceptorThreads" : null,
+        "bindHost" : null,
+        "bufferPoolIncrement" : "1024 bytes",
+        "headerCacheSize" : "512 bytes",
+        "httpCompliance" : "RFC7230",
+        "idleTimeout" : "30 seconds",
+        "inheritChannel" : false,
+        "inputBufferSize" : "8 kibibytes",
+        "maxBufferPoolSize" : "64 kibibytes",
+        "maxRequestHeaderSize" : "8 kibibytes",
+        "maxResponseHeaderSize" : "8 kibibytes",
+        "minBufferPoolSize" : "64 bytes",
+        "minRequestDataPerSecond" : "0 bytes",
+        "minResponseDataPerSecond" : "0 bytes",
+        "outputBufferSize" : "32 kibibytes",
+        "port" : 0,
+        "requestCookieCompliance" : "RFC6265",
+        "responseCookieCompliance" : "RFC6265",
+        "reuseAddress" : true,
+        "selectorThreads" : null,
+        "uriCompliance" : "DEFAULT",
+        "useDateHeader" : true,
+        "useForwardedHeaders" : false,
+        "useProxyProtocol" : false,
+        "useServerHeader" : false
+      } ],
+      "applicationContextPath" : "/",
+      "detailedJsonProcessingExceptionMapper" : false,
+      "dumpAfterStart" : false,
+      "dumpBeforeStop" : false,
+      "enableAdminVirtualThreads" : false,
+      "enableThreadNameFilter" : true,
+      "enableVirtualThreads" : false,
+      "gid" : null,
+      "group" : null,
+      "gzip" : {
+        "bufferSize" : "8 kibibytes",
+        "compressedMimeTypes" : null,
+        "deflateCompressionLevel" : -1,
+        "enabled" : true,
+        "excludedMimeTypes" : null,
+        "excludedPaths" : null,
+        "includedMethods" : null,
+        "includedPaths" : null,
+        "minimumEntitySize" : "256 bytes",
+        "syncFlush" : false
+      },
+      "idleThreadTimeout" : "1 minute",
+      "maxThreads" : 1024,
+      "metricPrefix" : null,
+      "minThreads" : 8,
+      "nofileHardLimit" : null,
+      "nofileSoftLimit" : null,
+      "registerDefaultExceptionMappers" : true,
+      "requestLog" : {
+        "type" : "logback-access",
+        "appenders" : [ {
+          "type" : "console",
+          "discardingThreshold" : -1,
+          "filterFactories" : [ ],
+          "includeCallerData" : false,
+          "layout" : null,
+          "logFormat" : null,
+          "messageRate" : null,
+          "queueSize" : 256,
+          "target" : "STDOUT",
+          "threshold" : "TRACE",
+          "timeZone" : "UTC"
+        } ]
+      },
+      "responseMeteredLevel" : "COARSE",
+      "rootPath" : null,
+      "shutdownGracePeriod" : "30 seconds",
+      "startsAsRoot" : null,
+      "uid" : null,
+      "umask" : null,
+      "user" : null
+    }
+  },
+  "violations" : [ ]
+}
