@@ -93,3 +93,14 @@ Each fix has a test that fails on the upstream base and passes here, shown by `c
 - Commit: `fix(client): close the Apache client when the environment stops`
 - Status: fork-only
 - Files: `dropwizard-client/src/main/java/io/dropwizard/client/JerseyClientBuilder.java`, `dropwizard-client/src/test/java/io/dropwizard/client/JerseyClientBuilderTest.java`
+
+### B8: Client timeouts of 25 days or more overflow
+
+- Upstream issue: None found.
+- Module: `dropwizard-client`
+- Root cause: `HttpClientBuilder.createClient` casts the timeouts to `int` milliseconds.
+- Visible change: These timeouts now take effect as configured.
+- Proving test: `dropwizard-client HttpClientBuilderTest#timeoutsLongerThanAnIntOfMillisecondsAreNotTruncated`
+- Commit: `fix(client): stop truncating timeouts to int milliseconds`
+- Status: fork-only
+- Files: `dropwizard-client/src/main/java/io/dropwizard/client/HttpClientBuilder.java`, `dropwizard-client/src/test/java/io/dropwizard/client/HttpClientBuilderTest.java`
