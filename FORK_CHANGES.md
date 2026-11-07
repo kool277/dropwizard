@@ -115,3 +115,14 @@ Each fix has a test that fails on the upstream base and passes here, shown by `c
 - Commit: `fix(util): saturate DataSizeUnit conversions instead of overflowing (dropwizard/dropwizard#11363)`
 - Status: fork-only; upstream fix proposed in the PR above
 - Files: `dropwizard-util/src/main/java/io/dropwizard/util/DataSizeUnit.java`, `dropwizard-util/src/test/java/io/dropwizard/util/DataSizeOverflowTest.java`
+
+### B10: Health state listeners are notified twice
+
+- Upstream issue: [dropwizard/dropwizard#11371](https://github.com/dropwizard/dropwizard/pull/11371), open.
+- Module: `dropwizard-health`
+- Root cause: `HealthCheckManager.onStateChanged` has a guarded notification loop followed by an unguarded copy of it.
+- Visible change: Listeners are called once per state change, and an exception from a listener no longer escapes into the health check run.
+- Proving test: `dropwizard-health HealthCheckManagerListenerTest`
+- Commit: `fix(health): notify health state listeners once per change (dropwizard/dropwizard#11371)`
+- Status: fork-only; upstream fix proposed in the PR above
+- Files: `dropwizard-health/src/main/java/io/dropwizard/health/HealthCheckManager.java`, `dropwizard-health/src/test/java/io/dropwizard/health/HealthCheckManagerListenerTest.java`
