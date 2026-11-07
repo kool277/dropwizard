@@ -51,6 +51,26 @@ wait_for_200() {
     echo $(( $(date +%s%3N) - started ))
 }
 
+# With a dedicated CPU set of at least 6 CPUs (COMPAT_CPUSET), sets server_on to run the server on the first 4 and
+# client_on to run the load generator on the rest, so that they don't compete. Otherwise both are empty.
+split_cpus() {
+    local cpus
+    read -r -a cpus <<< "$(python3 - <<'PY'
+cpus = []
+for part in open("/sys/fs/cgroup/cpuset.cpus.effective").read().strip().split(","):
+    first, _, last = part.partition("-")
+    cpus.extend(range(int(first), int(last or first) + 1))
+print(" ".join(str(cpu) for cpu in cpus))
+PY
+)"
+    server_on=()
+    client_on=()
+    if [ "${#cpus[@]}" -ge 6 ]; then
+        server_on=(taskset -c "$(IFS=,; echo "${cpus[*]:0:4}")")
+        client_on=(taskset -c "$(IFS=,; echo "${cpus[*]:4}")")
+    fi
+}
+
 # Rewrites anything that legitimately varies between runs, keeping the shape of a line.
 shape() {
     sed -E 's/[0-9]+/N/g'

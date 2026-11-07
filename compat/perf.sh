@@ -13,22 +13,8 @@ cd "$work" || exit 2
 rm -f /tmp/compat-perf.*
 java -Xmx512m -jar "$jar" db migrate "$compat_dir/perf.yml" > "$work/migrate.log" 2>&1
 
-# With a dedicated CPU set of at least 6 CPUs (COMPAT_CPUSET), the server gets the first 4 and wrk the rest, so that
-# they don't compete. A CPU quota would add throttling pauses that hide small differences.
-read -r -a cpus <<< "$(python3 - <<'PY'
-cpus = []
-for part in open("/sys/fs/cgroup/cpuset.cpus.effective").read().strip().split(","):
-    first, _, last = part.partition("-")
-    cpus.extend(range(int(first), int(last or first) + 1))
-print(" ".join(str(cpu) for cpu in cpus))
-PY
-)"
-server_on=()
-client_on=()
-if [ "${#cpus[@]}" -ge 6 ]; then
-    server_on=(taskset -c "$(IFS=,; echo "${cpus[*]:0:4}")")
-    client_on=(taskset -c "$(IFS=,; echo "${cpus[*]:4}")")
-fi
+# A CPU quota would add throttling pauses that hide small differences, so use dedicated CPUs where available.
+split_cpus
 
 # Sets server_pid and startup_ms. Not called in a subshell, so that both stay visible.
 start_server() {

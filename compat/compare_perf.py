@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
 """Compares footprint and performance of the fork with upstream, using several rounds of each.
 
-Each metric uses the median across rounds, because this is sensitive to whatever else the machine is doing. The tolerance
+Each metric uses the median across rounds, because this is sensitive to whatever else the machine is doing. Startup uses
+the alternating samples from startup_ab.sh when given with --startup, since a few startups per round vary too much. The
+tolerance
 only applies to getting worse: p99, allocation, startup and memory may each grow by at most 5%. A benchmark regresses only
 if it is more than 5% slower and its error bars don't overlap with upstream's.
 """
@@ -29,13 +31,17 @@ def row(name, base, fork, limit=True):
     return bad
 
 
-def main(base_paths, fork_paths):
+def main(base_paths, fork_paths, startup=None):
     base = [json.load(open(path)) for path in base_paths]
     fork = [json.load(open(path)) for path in fork_paths]
     failed = False
     print(f"      {'metric':42} {'upstream':>12} {'fork':>12} {'change':>8}")
     failed |= row("example jar (bytes)", median(base, "example_jar_bytes"), median(fork, "example_jar_bytes"))
-    failed |= row("startup to first 200 (ms)", median(base, "startup_ms"), median(fork, "startup_ms"))
+    if startup:
+        failed |= row(f"startup to first 200 (ms, {len(startup['upstream'])} alternating each)",
+                      statistics.median(startup["upstream"]), statistics.median(startup["fork"]))
+    else:
+        failed |= row("startup to first 200 (ms)", median(base, "startup_ms"), median(fork, "startup_ms"))
     failed |= row("RSS after 60 s light load (MB)", median(base, "rss_after_light_load_mb"), median(fork, "rss_after_light_load_mb"))
     for method in ("get", "post"):
         row(f"{method} requests/s", median(base, method, "requests_per_second"), median(fork, method, "requests_per_second"), False)
@@ -66,5 +72,10 @@ def main(base_paths, fork_paths):
 
 
 if __name__ == "__main__":
-    split = sys.argv.index("--")
-    sys.exit(main(sys.argv[1:split], sys.argv[split + 1:]))
+    arguments = sys.argv[1:]
+    startup_samples = None
+    if arguments[0] == "--startup":
+        startup_samples = json.load(open(arguments[1]))
+        arguments = arguments[2:]
+    split = arguments.index("--")
+    sys.exit(main(arguments[:split], arguments[split + 1:], startup_samples))

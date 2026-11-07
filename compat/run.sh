@@ -29,7 +29,9 @@ if [ "${1:-}" = "--full" ]; then
         base_results+=("$perf/upstream-$round.json")
         fork_results+=("$perf/fork-$round.json")
     done
-    python3 "$compat_dir/compare_perf.py" "${base_results[@]}" -- "${fork_results[@]}" | tee "$perf/comparison.txt"
+    "$compat_dir/startup_ab.sh" "$base_tree" "$compat_root" "$perf/startup.json" "${COMPAT_STARTUP_SAMPLES:-12}" || status=1
+    python3 "$compat_dir/compare_perf.py" --startup "$perf/startup.json" "${base_results[@]}" -- "${fork_results[@]}" \
+        | tee "$perf/comparison.txt"
     [ "${PIPESTATUS[0]}" -eq 0 ] || status=1
 fi
 if [ $status -eq 0 ]; then echo "RESULT: PASS"; else echo "RESULT: FAIL"; fi
