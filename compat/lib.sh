@@ -31,6 +31,13 @@ require_tree() {
     (cd "$1" && pwd)
 }
 
+# Prints the absolute path of a file to be written, whose directory must exist.
+absolute_path() {
+    local directory
+    directory="$(cd "$(dirname "$1")" && pwd)" || { echo "No directory for $1" >&2; return 1; }
+    echo "$directory/$(basename "$1")"
+}
+
 # The runnable example jar in a tree (not the original- jar that the shade plugin leaves behind).
 example_jar() {
     ls "$1"/dropwizard-example/target/dropwizard-example-*.jar | grep -v -e sources -e javadoc | head -1

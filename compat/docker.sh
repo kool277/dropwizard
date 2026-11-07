@@ -28,7 +28,7 @@ fi
 exec docker run --rm "$cpu_option" -u "$(id -u):$(id -g)" \
     -e HOME=/tmp \
     -e COMPAT_BASE_TREE="$base" \
-    -e COMPAT_PERF_ROUNDS -e COMPAT_STARTUP_SAMPLES -e COMPAT_LATENCY_TRIALS \
+    -e COMPAT_PERF_ROUNDS -e COMPAT_STARTUP_SAMPLES -e COMPAT_LATENCY_TRIALS -e COMPAT_FOOTPRINT_SAMPLES \
     -e JAVA_OPTS='-XX:+TieredCompilation -XX:TieredStopAtLevel=1' \
     -e MAVEN_USER_HOME="$m2/wrapper" \
     -e MAVEN_ARGS="-Dmaven.repo.local=$m2/repo" \

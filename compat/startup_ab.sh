@@ -7,7 +7,7 @@ set -uo pipefail
 . "$(dirname "$0")/lib.sh"
 base="$(require_tree "$1")" || exit 2
 fork="$(require_tree "$2")" || exit 2
-output="$3"
+output="$(absolute_path "$3")" || exit 2
 samples="${4:-12}"
 work="$(mktemp -d)"
 trap 'kill -9 $(jobs -p) 2>/dev/null; rm -rf "$work"' EXIT

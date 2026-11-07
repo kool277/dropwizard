@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
-# Measures footprint and performance of a tree that capture.sh has built.
-# Usage: perf.sh <tree> <output json> [--jmh]
+# Measures allocation and garbage collection under load, with JFR, for a tree that capture.sh has built. Startup, memory,
+# latency and the benchmarks are compared by the *_ab.sh scripts, which alternate between the two trees.
+# Usage: perf.sh <tree> <output json>
 set -uo pipefail
 . "$(dirname "$0")/lib.sh"
 tree="$(require_tree "$1")" || exit 2
-json="$2"
-jmh="${3:-}"
+json="$(absolute_path "$2")" || exit 2
 work="$(mktemp -d)"
 trap 'kill -9 $(jobs -p) 2>/dev/null; rm -rf "$work"' EXIT
 jar="$(example_jar "$tree")"
@@ -36,13 +36,6 @@ stop_server() {
     wait "$server_pid" 2>/dev/null
 }
 
-# Light load, then resident memory. Startup is compared separately by startup_ab.sh; this one is kept for the record.
-start_server
-startups=("$startup_ms")
-"${client_on[@]}" wrk -t1 -c2 -d60s --timeout 10s http://127.0.0.1:8080/hello-world > /dev/null
-rss_kb="$(awk '/VmRSS/{print $2}' "/proc/$server_pid/status")"
-stop_server
-
 # Heavy load with JFR recording, for allocation and garbage collection. Latency is compared by latency_ab.sh, without a
 # profiler attached.
 measure() {
@@ -56,14 +49,10 @@ measure() {
     jcmd "$server_pid" JFR.stop name=compat > /dev/null
     stop_server
     jfr summary "$work/$name.jfr" | awk '$1=="jdk.GarbageCollection"{print $2}' > "$work/$name.gc"
-    jfr print --events jdk.ObjectAllocationSample "$work/$name.jfr" | grep 'weight =' > "$work/$name.weights"
+    # Exact per-thread allocation counters, rather than the sampled allocation events.
+    jfr print --json --events jdk.ThreadAllocationStatistics "$work/$name.jfr" > "$work/$name.alloc.json"
 }
 measure get 0
 measure post 1
 
-if [ "$jmh" = "--jmh" ]; then
-    jmh_cp="$(module_jar "$tree" dropwizard-benchmarks):$(cat "$tree/dropwizard-benchmarks/target/compat-cp.txt")"
-    "${server_on[@]}" java -cp "$jmh_cp" org.openjdk.jmh.Main -f 1 -wi 3 -i 5 -w 5s -r 5s -rf json -rff "$work/jmh.json" > "$work/jmh.log" 2>&1
-fi
-
-python3 "$compat_dir/perf_json.py" "$work" "$json" "$jar" "${startups[*]}" "$rss_kb"
+python3 "$compat_dir/perf_json.py" "$work" "$json" "$jar"
