@@ -60,3 +60,14 @@ Each fix has a test that fails on the upstream base and passes here, shown by `c
 - Commit: `fix(jersey): bound the constraint message prefix cache`
 - Status: fork-only
 - Files: `dropwizard-jersey/src/main/java/io/dropwizard/jersey/validation/ConstraintMessage.java`, `dropwizard-jersey/src/test/java/io/dropwizard/jersey/validation/ConstraintMessageCacheTest.java`
+
+### B5: Nested `@UnitOfWork` breaks on `DualSessionFactory`
+
+- Upstream issue: None found.
+- Module: `dropwizard-hibernate`
+- Root cause: `UnitOfWorkAspect` calls `hasBind` and `unbind` with the `DualSessionFactory` wrapper, but `ManagedSessionContext.bind` uses the session's own factory, so they never match. The aspect also never restores the factory chosen by `prepare`.
+- Visible change: A nested unit of work joins the outer session instead of committing separately, and the outer session stays usable afterwards.
+- Proving test: `dropwizard-hibernate DualSessionFactoryUnitOfWorkTest`
+- Commit: `fix(hibernate): bind nested units of work correctly on DualSessionFactory`
+- Status: fork-only
+- Files: `dropwizard-hibernate/src/main/java/io/dropwizard/hibernate/UnitOfWorkAspect.java`, `dropwizard-hibernate/src/test/java/io/dropwizard/hibernate/dual/DualSessionFactoryUnitOfWorkTest.java`

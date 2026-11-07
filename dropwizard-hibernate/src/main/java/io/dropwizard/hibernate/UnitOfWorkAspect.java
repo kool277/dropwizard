@@ -53,6 +53,15 @@ public class UnitOfWorkAspect {
     @Nullable
     private SessionFactory sessionFactory;
 
+    // The factory sessions are bound under in ManagedSessionContext. A DualSessionFactory isn't that factory: sessions
+    // report the primary or reader factory it delegates to.
+    @Nullable
+    private SessionFactory bindingFactory;
+
+    // Whether a DualSessionFactory had its reader active before this aspect prepared it. Null if there's nothing to restore.
+    @Nullable
+    private Boolean readerWasActive;
+
     // was the session created by this aspect?
     private boolean sessionCreated;
     // do we manage the transaction or did we join an existing one?
@@ -75,12 +84,15 @@ public class UnitOfWorkAspect {
             }
         }
 
+        bindingFactory = sessionFactory;
         if (sessionFactory instanceof DualSessionFactory dualSessionFactory) {
-            dualSessionFactory.prepare(unitOfWork.readOnly());
+            final SessionFactory previous = dualSessionFactory.current();
+            readerWasActive = previous == dualSessionFactory.prepare(true);
+            bindingFactory = dualSessionFactory.prepare(unitOfWork.readOnly());
         }
 
         Session existingSession = null;
-        if(ManagedSessionContext.hasBind(sessionFactory)) {
+        if(ManagedSessionContext.hasBind(bindingFactory)) {
             existingSession = sessionFactory.getCurrentSession();
         }
 
@@ -97,7 +109,8 @@ public class UnitOfWorkAspect {
             } catch (Throwable th) {
                 session.close();
                 session = null;
-                ManagedSessionContext.unbind(sessionFactory);
+                ManagedSessionContext.unbind(bindingFactory);
+                restoreDualSessionFactory();
                 throw th;
             }
         }
@@ -139,8 +152,16 @@ public class UnitOfWorkAspect {
         } finally {
             session = null;
             if(sessionCreated) {
-                ManagedSessionContext.unbind(sessionFactory);
+                ManagedSessionContext.unbind(bindingFactory);
             }
+            restoreDualSessionFactory();
+        }
+    }
+
+    private void restoreDualSessionFactory() {
+        if (readerWasActive != null && sessionFactory instanceof DualSessionFactory dualSessionFactory) {
+            dualSessionFactory.prepare(readerWasActive);
+            readerWasActive = null;
         }
     }
 
