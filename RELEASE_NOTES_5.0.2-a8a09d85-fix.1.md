@@ -17,3 +17,4 @@ Based on upstream `a8a09d85e6` on `release/5.0.x`, 148 commits after `v5.0.2`. T
 - Allow `CachingAuthenticator` and `CachingAuthorizer` to use cache specs that contain `recordStats`, which failed at startup. (B11)
 - Only tear down static and `PER_CLASS` test extensions whose `before()` succeeded. (B12)
 - Start outer `PER_METHOD` test extensions when the nested class uses `PER_CLASS`. (B13)
+- Roll back `DAOTest` transactions when an `Error` such as `AssertionError` is thrown. (B14)

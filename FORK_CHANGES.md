@@ -159,3 +159,14 @@ Each fix has a test that fails on the upstream base and passes here, shown by `c
 - Commit: `fix(testing): start outer extensions under a PER_CLASS nested class`
 - Status: fork-only
 - Files: `dropwizard-testing/src/main/java/io/dropwizard/testing/junit5/DropwizardExtensionsSupport.java`, `dropwizard-testing/src/test/java/io/dropwizard/testing/junit5/DropwizardExtensionsSupportNestedPerClassTest.java`
+
+### B14: `DAOTest` leaves the transaction open on an `Error`
+
+- Upstream issue: None found.
+- Module: `dropwizard-testing`
+- Root cause: `inTransaction` only catches `Exception`.
+- Visible change: The transaction rolls back and the `Error` is rethrown unchanged.
+- Proving test: `dropwizard-testing DAOTestExtensionTest#rollsBackTransactionWhenAnErrorIsThrown`
+- Commit: `fix(testing): roll back DAOTest transactions when an Error is thrown`
+- Status: fork-only
+- Files: `dropwizard-testing/src/main/java/io/dropwizard/testing/common/DAOTest.java`, `dropwizard-testing/src/test/java/io/dropwizard/testing/junit5/DAOTestExtensionTest.java`
