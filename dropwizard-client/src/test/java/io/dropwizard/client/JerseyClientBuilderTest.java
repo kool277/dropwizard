@@ -57,6 +57,10 @@ import java.lang.reflect.Type;
 import java.net.InetSocketAddress;
 import java.net.Proxy;
 import java.net.ProxySelector;
+import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
+import org.apache.hc.client5.http.config.RequestConfig;
+import io.dropwizard.lifecycle.Managed;
+import org.mockito.ArgumentCaptor;
 import java.net.SocketAddress;
 import java.net.URI;
 import java.security.cert.X509Certificate;
@@ -73,6 +77,7 @@ import static org.mockito.ArgumentMatchers.assertArg;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -97,6 +102,43 @@ class JerseyClientBuilderTest {
     @AfterEach
     void tearDown() {
         executorService.shutdown();
+    }
+
+    @Test
+    void closesTheApacheClientWhenTheEnvironmentStops() throws Exception {
+        final CloseableHttpClient apacheClient = mock();
+        when(apacheHttpClientBuilder.buildWithDefaultRequestConfiguration("test"))
+            .thenReturn(new ConfiguredCloseableHttpClient(apacheClient, RequestConfig.DEFAULT));
+        final ArgumentCaptor<Managed> managed = ArgumentCaptor.forClass(Managed.class);
+
+        builder.using(environment).using(executorService, objectMapper).build("test");
+        verify(lifecycleEnvironment).manage(managed.capture());
+        managed.getValue().stop();
+
+        verify(apacheClient).close();
+    }
+
+    @Test
+    void stoppingTwiceAndBuildingAnotherClientKeepWorking() throws Exception {
+        final CloseableHttpClient firstClient = mock();
+        final CloseableHttpClient secondClient = mock();
+        when(apacheHttpClientBuilder.buildWithDefaultRequestConfiguration("first"))
+            .thenReturn(new ConfiguredCloseableHttpClient(firstClient, RequestConfig.DEFAULT));
+        when(apacheHttpClientBuilder.buildWithDefaultRequestConfiguration("second"))
+            .thenReturn(new ConfiguredCloseableHttpClient(secondClient, RequestConfig.DEFAULT));
+        final ArgumentCaptor<Managed> managed = ArgumentCaptor.forClass(Managed.class);
+
+        builder.using(environment).using(executorService, objectMapper).build("first");
+        verify(lifecycleEnvironment).manage(managed.capture());
+        managed.getValue().stop();
+        managed.getValue().stop();
+
+        builder.build("second");
+        verify(lifecycleEnvironment, times(2)).manage(managed.capture());
+        managed.getValue().stop();
+
+        verify(firstClient, times(2)).close();
+        verify(secondClient).close();
     }
 
     @Test

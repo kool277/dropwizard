@@ -10,3 +10,4 @@ Based on upstream `a8a09d85e6` on `release/5.0.x`, 148 commits after `v5.0.2`. T
 - Limit the `ConstraintMessage` prefix cache to 10,000 entries, because its keys can contain client-chosen map keys. (B4)
 - Fix nested `@UnitOfWork` with `DualSessionFactory`: it joins the outer session, closed sessions no longer stay bound to the thread, and the active factory is restored afterwards. (B5)
 - Use the primary factory on threads that never called `DualSessionFactory.prepare`, instead of throwing `NullPointerException`. (B6)
+- Close the connection pool of `JerseyClientBuilder` clients when the environment stops. (B7)

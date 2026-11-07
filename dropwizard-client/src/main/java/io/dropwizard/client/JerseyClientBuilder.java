@@ -25,6 +25,7 @@ import org.glassfish.jersey.client.ClientConfig;
 import org.glassfish.jersey.client.spi.ConnectorProvider;
 
 import javax.net.ssl.HostnameVerifier;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -354,15 +355,22 @@ public class JerseyClientBuilder {
             apacheHttpClientBuilder.disableContentCompression(true);
         }
 
-        final Client client = org.glassfish.jersey.client.JerseyClientBuilder.createClient(buildConfig(name, threadPool, objectMapper, validator));
+        final ConfiguredCloseableHttpClient apacheHttpClient =
+            connectorProvider == null ? apacheHttpClientBuilder.buildWithDefaultRequestConfiguration(name) : null;
+        final Client client = org.glassfish.jersey.client.JerseyClientBuilder.createClient(
+            buildConfig(threadPool, objectMapper, validator, apacheHttpClient));
         client.register(new JerseyIgnoreRequestUserAgentHeaderFilter());
 
         // Tie the client to server lifecycle
         if (environment != null) {
             environment.lifecycle().manage(new Managed() {
                 @Override
-                public void stop() {
+                public void stop() throws IOException {
                     client.close();
+                    // DropwizardApacheConnector leaves closing the Apache client to the environment.
+                    if (apacheHttpClient != null) {
+                        apacheHttpClient.getClient().close();
+                    }
                 }
             });
         }
@@ -374,9 +382,10 @@ public class JerseyClientBuilder {
         return client;
     }
 
-    private Configuration buildConfig(final String name, final ExecutorService threadPool,
+    private Configuration buildConfig(final ExecutorService threadPool,
                                       final ObjectMapper objectMapper,
-                                      final Validator validator) {
+                                      final Validator validator,
+                                      @Nullable final ConfiguredCloseableHttpClient apacheHttpClient) {
         final ClientConfig config = new ClientConfig();
 
         for (Object singleton : this.singletons) {
@@ -397,9 +406,7 @@ public class JerseyClientBuilder {
         config.register(new DropwizardExecutorProvider(threadPool));
 
         if (connectorProvider == null) {
-            final ConfiguredCloseableHttpClient apacheHttpClient =
-                    apacheHttpClientBuilder.buildWithDefaultRequestConfiguration(name);
-            config.connectorProvider((client, runtimeConfig) -> createDropwizardApacheConnector(apacheHttpClient));
+            config.connectorProvider((client, runtimeConfig) -> createDropwizardApacheConnector(requireNonNull(apacheHttpClient)));
         } else {
             config.connectorProvider(connectorProvider);
         }

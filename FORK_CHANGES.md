@@ -82,3 +82,14 @@ Each fix has a test that fails on the upstream base and passes here, shown by `c
 - Commit: `fix(hibernate): use the primary factory on threads that never prepared`
 - Status: fork-only
 - Files: `dropwizard-hibernate/src/main/java/io/dropwizard/hibernate/dual/DualSessionFactory.java`, `dropwizard-hibernate/src/test/java/io/dropwizard/hibernate/dual/DualSessionFactoryTest.java`
+
+### B7: Jersey clients never close their connection pool
+
+- Upstream issue: None found.
+- Module: `dropwizard-client`
+- Root cause: `DropwizardApacheConnector.close()` leaves the Apache client to the environment, but only `HttpClientBuilder.build` registers it. `JerseyClientBuilder` doesn't.
+- Visible change: The connection pool closes when the environment stops. A client built without an environment still isn't closed; see the deferred items in `COMPATIBILITY_REPORT.md`.
+- Proving test: `dropwizard-client JerseyClientBuilderTest#closesTheApacheClientWhenTheEnvironmentStops`
+- Commit: `fix(client): close the Apache client when the environment stops`
+- Status: fork-only
+- Files: `dropwizard-client/src/main/java/io/dropwizard/client/JerseyClientBuilder.java`, `dropwizard-client/src/test/java/io/dropwizard/client/JerseyClientBuilderTest.java`
