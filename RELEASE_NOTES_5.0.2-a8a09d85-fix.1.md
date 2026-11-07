@@ -1,20 +1,39 @@
 # Dropwizard 5.0.2-a8a09d85-fix.1
 
-Based on upstream `a8a09d85e6` on `release/5.0.x`, 148 commits after `v5.0.2`. This is a bug-fix fork, not an upstream release. It keeps upstream's `io.dropwizard` coordinates, so it is for local use and must not be published.
+Based on upstream `a8a09d85e6` on `release/5.0.x`, 148 commits after `v5.0.2`. This is a bug-fix fork, not an upstream release. It keeps upstream's `io.dropwizard` coordinates, so it is for local use and must not be published to a Maven repository.
 
 ## Fixes
 
-- Deny access for class-level `@DenyAll`, which was ignored, leaving methods without their own security annotation reachable anonymously. **Behaviour change** for any class that relied on this. (B1)
-- Ignore path parameters when choosing the `AssetServlet` media type, so that a link such as `/app.js;x.html` can't serve an asset as HTML. (B2)
-- Stop treating `AbstractParam` error messages as format strings. Input such as `%s%d` now gets a 400 rather than a 500. **Behaviour change:** a custom `errorMessage` that uses `%%` for a percent sign must now use `%`. (B3)
-- Limit the `ConstraintMessage` prefix cache to 10,000 entries, because its keys can contain client-chosen map keys. (B4)
-- Fix nested `@UnitOfWork` with `DualSessionFactory`: it joins the outer session, closed sessions no longer stay bound to the thread, and the active factory is restored afterwards. (B5)
-- Use the primary factory on threads that never called `DualSessionFactory.prepare`, instead of throwing `NullPointerException`. (B6)
-- Close the connection pool of `JerseyClientBuilder` clients when the environment stops. (B7)
-- Stop truncating client timeouts of 25 days or more, which failed the build or silently became much shorter. (B8)
-- Saturate `DataSizeUnit` conversions instead of overflowing to wrong or negative sizes, which also broke `@MaxDataSize` checks and comparisons. (B9)
-- Notify health state listeners once per state change instead of twice, and stop their exceptions from escaping. (B10)
-- Allow `CachingAuthenticator` and `CachingAuthorizer` to use cache specs that contain `recordStats`, which failed at startup. (B11)
-- Only tear down static and `PER_CLASS` test extensions whose `before()` succeeded. (B12)
-- Start outer `PER_METHOD` test extensions when the nested class uses `PER_CLASS`. (B13)
-- Roll back `DAOTest` transactions when an `Error` such as `AssertionError` is thrown. (B14)
+- **B1** (dropwizard-auth): Deny access for class-level `@DenyAll`, which was ignored, leaving methods without their own security annotation reachable anonymously. **Behaviour change** for any class that relied on this. Upstream: none found in a search on 2026-11-07; fork-only. Commit `8a7b5675a8`.
+- **B2** (dropwizard-servlets): Ignore path parameters when choosing the `AssetServlet` media type, so that a link such as `/app.js;x.html` can't serve an asset as HTML. Upstream: [dropwizard/dropwizard#11385](https://github.com/dropwizard/dropwizard/pull/11385), open, by another contributor; this fork's fix was written independently. Commit `c05bdbfa8f`.
+- **B3** (dropwizard-jersey): Stop treating `AbstractParam` error messages as format strings. Input such as `%s%d` now gets a 400 rather than a 500. **Behaviour change:** a custom `errorMessage` that uses `%%` for a percent sign must now use `%`. Upstream: [dropwizard/dropwizard#11364](https://github.com/dropwizard/dropwizard/pull/11364), open, by another contributor; this fork's fix was written independently. Commit `434047a51e`.
+- **B4** (dropwizard-jersey): Limit the `ConstraintMessage` prefix cache to 10,000 entries, because its keys can contain client-chosen map keys. Upstream: none found in a search on 2026-11-07; fork-only. Commit `d5c906474e`.
+- **B5** (dropwizard-hibernate): Fix nested `@UnitOfWork` with `DualSessionFactory`: it joins the outer session, closed sessions no longer stay bound to the thread, and the active factory is restored afterwards. Upstream: none found in a search on 2026-11-07; fork-only. Commit `b73211b452`.
+- **B6** (dropwizard-hibernate): Use the primary factory on threads that never called `DualSessionFactory.prepare`, instead of throwing `NullPointerException`. Upstream: none found in a search on 2026-11-07; fork-only. Commit `a3c4211644`.
+- **B7** (dropwizard-client): Close the connection pool of `JerseyClientBuilder` clients when the environment stops. Upstream: none found in a search on 2026-11-07; fork-only. Commit `10c0cdecc2`.
+- **B8** (dropwizard-client): Stop truncating client timeouts of 25 days or more, which failed the build or silently became much shorter. Upstream: none found in a search on 2026-11-07; fork-only. Commit `63ee859030`.
+- **B9** (dropwizard-util): Saturate `DataSizeUnit` conversions instead of overflowing to wrong or negative sizes, which also broke `@MaxDataSize` checks and comparisons. Upstream: [dropwizard/dropwizard#11363](https://github.com/dropwizard/dropwizard/pull/11363), open, by another contributor; this fork's fix was written independently. Commit `9f1a1e6a0a`.
+- **B10** (dropwizard-health): Notify health state listeners once per state change instead of twice, and stop their exceptions from escaping. Upstream: [dropwizard/dropwizard#11371](https://github.com/dropwizard/dropwizard/pull/11371), open, by another contributor; this fork's fix was written independently. Commit `86b86e5aec`.
+- **B11** (dropwizard-auth): Allow `CachingAuthenticator` and `CachingAuthorizer` to use cache specs that contain `recordStats`, which failed at startup. Upstream: none found in a search on 2026-11-07; fork-only. Commit `c5f4d2db42`.
+- **B12** (dropwizard-testing): Only tear down static and `PER_CLASS` test extensions whose `before()` succeeded. Upstream: none found in a search on 2026-11-07; fork-only. Commit `360f0048a5`.
+- **B13** (dropwizard-testing): Start outer `PER_METHOD` test extensions when the nested class uses `PER_CLASS`. Upstream: none found in a search on 2026-11-07; fork-only. Commit `51751bbb78`.
+- **B14** (dropwizard-testing): Roll back `DAOTest` transactions when an `Error` such as `AssertionError` is thrown. Upstream: none found in a search on 2026-11-07; fork-only. Commit `73941f31ce`.
+
+## Upgrading from upstream
+
+The fork is a drop-in replacement for upstream at the base commit, except for two deliberate behaviour changes:
+
+- **B1:** methods of a resource class annotated with `@DenyAll` now return 401 or 403 unless they have their own `@PermitAll` or `@RolesAllowed`. If a class relied on the annotation being ignored, remove it.
+- **B3:** in a custom `AbstractParam.errorMessage`, `%s` is replaced literally and nothing else is formatted, so write a percent sign as `%`, not `%%`.
+
+## Dependency exceptions
+
+None. Every library version is the same as upstream's. The two Medium advisories for the transitive `com.rabbitmq:amqp-client` 5.35.0 (GHSA-7822-rcf6-97fx, GHSA-cqgh-8p3p-mx4m) remain, as upstream has them; applications that use metrics-graphite's RabbitMQ sender can pin `amqp-client` 5.37.1 themselves.
+
+## Compatibility
+
+`compat/run.sh --full` on `f9a725a12e` passed. Commands, admin endpoints, metric names, log and request-log formats, the effective configuration of 181 files and every configuration type's defaults, runtime dependencies, and the binary and source API of all 29 published modules are identical to upstream. Startup, memory, allocation, latency and the JMH benchmarks are within 5% of upstream. Each fix has a test that fails on upstream and passes here. See `COMPATIBILITY_REPORT.md`.
+
+## New documentation
+
+An operations guide (`docs/source/manual/operations.rst`) with measured CPU, memory, startup, concurrency, TLS, network and disk figures, default limits, and how to isolate the admin interface.
