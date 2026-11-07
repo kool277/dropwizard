@@ -61,7 +61,9 @@ public abstract class AbstractParam<T> {
         LOGGER.debug("Invalid input received: {}", input);
         String errorMessage = errorMessage(e);
         if (errorMessage.contains("%s")) {
-            errorMessage = String.format(errorMessage, parameterName);
+            // The message can embed client input through the parse exception's text, so it must not be
+            // interpreted as a format string.
+            errorMessage = errorMessage.replace("%s", parameterName);
         }
         return new ErrorMessage(getErrorStatus().getStatusCode(), errorMessage);
     }

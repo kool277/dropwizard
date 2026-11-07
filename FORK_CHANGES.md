@@ -38,3 +38,14 @@ Each fix has a test that fails on the upstream base and passes here, shown by `c
 - Commit: `fix(servlets): ignore path parameters when choosing asset media type (dropwizard/dropwizard#11385)`
 - Status: fork-only; upstream fix proposed in the PR above
 - Files: `dropwizard-servlets/src/main/java/io/dropwizard/servlets/assets/AssetServlet.java`, `dropwizard-servlets/src/test/java/io/dropwizard/servlets/assets/AssetServletTest.java`
+
+### B3: `AbstractParam` formats client input
+
+- Upstream issue: [dropwizard/dropwizard#11364](https://github.com/dropwizard/dropwizard/pull/11364), open.
+- Module: `dropwizard-jersey`
+- Root cause: `generateErrorMessage` passes the message to `String.format` if it contains `%s`, and the default message includes the parse exception's text, which can echo the input.
+- Visible change: `%s` in an error message is replaced literally. A custom `errorMessage` using `%%` for a percent sign must now use `%`, and other format specifiers are no longer interpreted.
+- Proving test: `dropwizard-jersey AbstractParamErrorMessageTest`
+- Commit: `fix(jersey): stop treating AbstractParam errors as format strings (dropwizard/dropwizard#11364)`
+- Status: fork-only; upstream fix proposed in the PR above
+- Files: `dropwizard-jersey/src/main/java/io/dropwizard/jersey/params/AbstractParam.java`, `dropwizard-jersey/src/test/java/io/dropwizard/jersey/params/AbstractParamErrorMessageTest.java`, `dropwizard-jersey/pom.xml`
