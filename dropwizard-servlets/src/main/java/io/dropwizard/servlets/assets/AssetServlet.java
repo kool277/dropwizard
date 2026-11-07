@@ -194,7 +194,8 @@ public class AssetServlet extends HttpServlet {
         if (req.getPathInfo() != null) {
             builder.append(req.getPathInfo());
         }
-        final CachedAsset cachedAsset = loadAsset(builder.toString());
+        final String assetPath = builder.toString();
+        final CachedAsset cachedAsset = loadAsset(assetPath);
         if (cachedAsset == null) {
             resp.sendError(HttpServletResponse.SC_NOT_FOUND);
             return;
@@ -232,12 +233,13 @@ public class AssetServlet extends HttpServlet {
             }
         }
 
-        final String requestUri = req.getRequestURI();
+        // Use the path the asset was loaded from, not the request URI: path parameters such as "/app.js;x.html"
+        // must not be able to change the media type of the response.
         final String mediaType = Optional.ofNullable(
             req.getServletContext().getMimeType(
-                indexFile != null && requestUri.endsWith("/")  // If indexFile configured (and directory requested),
-                    ? requestUri + indexFile                   //   then use MIME type of the index file.
-                    : requestUri))
+                indexFile != null && assetPath.endsWith("/")  // If indexFile configured (and directory requested),
+                    ? assetPath + indexFile                   //   then use MIME type of the index file.
+                    : assetPath))
             .orElse(defaultMediaType);
 
         final List<String> rangeHeaders = Collections.list(

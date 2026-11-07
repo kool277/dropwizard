@@ -118,6 +118,16 @@ public class AssetServletTest {
     }
 
     @Test
+    void pathParametersDoNotChangeTheMediaType() throws Exception {
+        request.setURI(DUMMY_SERVLET + "example.txt;x.html");
+        response = HttpTester.parseResponse(SERVLET_TESTER.getResponses(request.generate()));
+        assertThat(response.getStatus())
+                .isEqualTo(200);
+        assertThat(response.get(HttpHeader.CONTENT_TYPE))
+                .startsWith("text/plain");
+    }
+
+    @Test
     void servesFilesMappedToRoot() throws Exception {
         request.setURI(ROOT_SERVLET + "assets/example.txt");
         response = HttpTester.parseResponse(SERVLET_TESTER.getResponses(request.generate()));

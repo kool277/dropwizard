@@ -27,3 +27,14 @@ Each fix has a test that fails on the upstream base and passes here, shown by `c
 - Commit: `fix(auth): deny access for class-level @DenyAll`
 - Status: fork-only
 - Files: `dropwizard-auth/src/main/java/io/dropwizard/auth/AuthDynamicFeature.java`, `dropwizard-auth/src/test/java/io/dropwizard/auth/ClassLevelDenyAllTest.java`, `docs/source/manual/auth.rst`
+
+### B2: Path parameters choose the asset media type
+
+- Upstream issue: [dropwizard/dropwizard#11385](https://github.com/dropwizard/dropwizard/pull/11385), open.
+- Module: `dropwizard-servlets`
+- Root cause: `AssetServlet` loads the asset from the decoded path, but picks the media type from `getRequestURI()`, which still has `;` path parameters.
+- Visible change: `/app.js;x.html` is served with the media type of `app.js`.
+- Proving test: `dropwizard-servlets AssetServletTest#pathParametersDoNotChangeTheMediaType`
+- Commit: `fix(servlets): ignore path parameters when choosing asset media type (dropwizard/dropwizard#11385)`
+- Status: fork-only; upstream fix proposed in the PR above
+- Files: `dropwizard-servlets/src/main/java/io/dropwizard/servlets/assets/AssetServlet.java`, `dropwizard-servlets/src/test/java/io/dropwizard/servlets/assets/AssetServletTest.java`
