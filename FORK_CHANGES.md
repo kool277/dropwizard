@@ -13,6 +13,13 @@ This fork is upstream Dropwizard at the commit below, plus the changes listed he
 - Status: fork-only
 - Files: `compat/*`, `FORK_CHANGES.md`, `RELEASE_NOTES_*.md`
 
+### F2: Operations guide
+
+- Why: requested for this fork. Documents what Dropwizard needs from the machine and the network, its default limits,
+  and how to run it securely, with measurements of the example application.
+- Status: fork-only. It could be proposed upstream, but its measurements describe one machine.
+- Files: `docs/source/manual/operations.rst`, `docs/source/index.rst`
+
 ## Fixes
 
 Each fix has a test that fails on the upstream base and passes here, shown by `compat/prove.sh`.

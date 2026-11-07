@@ -49,6 +49,7 @@ team to ship a *production-quality* web service in the shortest time possible.
    manual/upgrade-notes
    manual/example
    manual/configuration
+   manual/operations
    manual/internals
 
 .. toctree::
