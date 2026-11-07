@@ -1,8 +1,12 @@
 package io.dropwizard.auth;
 
+import jakarta.annotation.Priority;
 import jakarta.annotation.security.DenyAll;
 import jakarta.annotation.security.PermitAll;
 import jakarta.annotation.security.RolesAllowed;
+import jakarta.ws.rs.ForbiddenException;
+import jakarta.ws.rs.Priorities;
+import jakarta.ws.rs.container.ContainerRequestContext;
 import jakarta.ws.rs.container.ContainerRequestFilter;
 import jakarta.ws.rs.container.DynamicFeature;
 import jakarta.ws.rs.container.ResourceInfo;
@@ -54,6 +58,17 @@ public class AuthDynamicFeature implements Feature, DynamicFeature {
         final Annotation[][] parameterAnnotations = am.getParameterAnnotations();
         final Class<?>[] parameterTypes = am.getParameterTypes();
 
+        // Neither this feature's checks below nor Jersey's RolesAllowedDynamicFeature act on a class-level @DenyAll,
+        // so deny here unless a method-level annotation takes precedence over it.
+        if (resourceInfo.getResourceClass().isAnnotationPresent(DenyAll.class)
+            && !am.isAnnotationPresent(RolesAllowed.class)
+            && !am.isAnnotationPresent(PermitAll.class)
+            && !am.isAnnotationPresent(DenyAll.class)) {
+            registerAuthFilter(context);
+            context.register(new DenyAllRequestFilter());
+            return;
+        }
+
         // First, check for any @Auth annotations on the method.
         for (int i = 0; i < parameterAnnotations.length; i++) {
             if (containsAuthAnnotation(parameterAnnotations[i])) {
@@ -68,7 +83,6 @@ public class AuthDynamicFeature implements Feature, DynamicFeature {
         }
 
         // Second, check for any authorization annotations on the class or method.
-        // Note that @DenyAll shouldn't be attached to classes.
         final boolean annotationOnClass = (resourceInfo.getResourceClass().getAnnotation(RolesAllowed.class) != null) ||
             (resourceInfo.getResourceClass().getAnnotation(PermitAll.class) != null);
         final boolean annotationOnMethod = am.isAnnotationPresent(RolesAllowed.class) || am.isAnnotationPresent(DenyAll.class) ||
@@ -76,6 +90,14 @@ public class AuthDynamicFeature implements Feature, DynamicFeature {
 
         if (annotationOnClass || annotationOnMethod) {
             registerAuthFilter(context);
+        }
+    }
+
+    @Priority(Priorities.AUTHORIZATION)
+    static final class DenyAllRequestFilter implements ContainerRequestFilter {
+        @Override
+        public void filter(ContainerRequestContext requestContext) {
+            throw new ForbiddenException();
         }
     }
 
