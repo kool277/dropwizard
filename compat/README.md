@@ -11,7 +11,9 @@ git fetch upstream --tags
 git worktree add ../dw-upstream "$(cat compat/UPSTREAM_BASE)"
 ```
 
-Environment variables: `COMPAT_BASE_TREE` (upstream worktree, default `../dw-upstream`), `COMPAT_M2` (Maven repository directory, default `~/.m2`), `COMPAT_CPUS` (CPU limit, default 6).
+Environment variables: `COMPAT_BASE_TREE` (upstream worktree, default `../dw-upstream`), `COMPAT_M2` (Maven repository directory, default `~/.m2`), `COMPAT_CPUS` (CPU limit, default 6), `COMPAT_CPUSET` (dedicated CPUs instead of a limit), `COMPAT_PERF_ROUNDS` (rounds per side for `--full`, default 2).
+
+For `--full`, set `COMPAT_CPUSET` to at least 6 CPUs that are otherwise idle, such as `COMPAT_CPUSET=8-13`. The server then runs on the first 4 and the load generator on the rest. Under a CPU limit instead, the kernel's throttling adds pauses of tens of milliseconds that hide small differences in latency.
 
 ## Usage
 

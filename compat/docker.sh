@@ -4,6 +4,7 @@
 #   COMPAT_BASE_TREE  upstream worktree (default: ../dw-upstream)
 #   COMPAT_M2         directory for the Maven repository and wrapper (default: ~/.m2)
 #   COMPAT_CPUS       CPU limit for the container (default: 6)
+#   COMPAT_CPUSET     dedicated CPUs instead of a limit, such as 8-13; use this for --full, see compat/README.md
 #   COMPAT_EXTRA_TREES other trees to mount at their host paths, separated by spaces
 set -euo pipefail
 root="$(cd "$(dirname "$0")/.." && pwd)"
@@ -19,7 +20,12 @@ for tree in ${COMPAT_EXTRA_TREES:-}; do
     extra+=(-v "$tree:$tree")
 done
 docker build -q -t dw-compat - < "$root/compat/Dockerfile" >/dev/null
-exec docker run --rm --cpus="${COMPAT_CPUS:-6}" -u "$(id -u):$(id -g)" \
+if [ -n "${COMPAT_CPUSET:-}" ]; then
+    cpu_option="--cpuset-cpus=$COMPAT_CPUSET"
+else
+    cpu_option="--cpus=${COMPAT_CPUS:-6}"
+fi
+exec docker run --rm "$cpu_option" -u "$(id -u):$(id -g)" \
     -e HOME=/tmp \
     -e COMPAT_BASE_TREE="$base" \
     -e JAVA_OPTS='-XX:+TieredCompilation -XX:TieredStopAtLevel=1' \
