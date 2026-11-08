@@ -29,6 +29,13 @@ This fork is upstream Dropwizard at the commit below, plus the changes listed he
 - Status: fork-only
 - Files: `pom.xml`, `*/pom.xml`
 
+### F4: Disabled inherited workflows
+
+- Why: a fork must never publish under `io.dropwizard`. Every inherited workflow that a tag push or a release event triggers is disabled in the repository settings of `kool277/dropwizard`, with `gh workflow disable`; the YAML files are unchanged.
+- Disabled: `Release` (`.github/workflows/release.yml`, triggered by pushes of `v*` tags; it runs `mvn deploy` towards Maven Central and JReleaser).
+- Checked and left enabled, because tags and releases don't trigger them: `Java CI`, `Pull Request Docs Check`, `Code Scanning - Action` (branch pushes and pull requests), `Assign Milestone` (pull requests), `Close stale issues` (schedule), `Trigger Release`, `Announce Release` (manual only).
+- Status: fork infrastructure. To undo: `gh workflow enable Release --repo kool277/dropwizard`.
+
 ## Fixes
 
 Each fix has a test that fails on the upstream base and passes here, shown by `compat/prove.sh`.
