@@ -25,8 +25,8 @@ This fork is upstream Dropwizard at the commit below, plus the changes listed he
 
 ### F3: Release version
 
-- Why: gives the fork its own version, `5.0.2-fix.1`, so that its artifacts can't be mistaken for an upstream release.
-- Commit: `build: release 5.0.2-fix.1`
+- Why: gives the fork its own version, `5.0.2-fix.1`, so that its artifacts can't be mistaken for an upstream release. Development continues as `5.0.2-fix.2-SNAPSHOT`.
+- Commits: `build: release 5.0.2-fix.1`, `build: start 5.0.2-fix.2-SNAPSHOT`
 - Status: fork-only
 - Files: `pom.xml`, `*/pom.xml`
 
