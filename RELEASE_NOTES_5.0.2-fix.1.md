@@ -1,6 +1,6 @@
-# Dropwizard 5.0.2-a8a09d85-fix.1
+# Dropwizard 5.0.2-fix.1
 
-Based on upstream `a8a09d85e6` on `release/5.0.x`, 148 commits after `v5.0.2`. This is a bug-fix fork, not an upstream release. It keeps upstream's `io.dropwizard` coordinates, so it is for local use and must not be published to a Maven repository.
+Based on upstream tag `v5.0.2` plus 148 commits: commit `a8a09d85e6` on `release/5.0.x`, which upstream hasn't tagged. This is a bug-fix fork, not an upstream release. It keeps upstream's `io.dropwizard` coordinates, so it is for local use and must not be published to a Maven repository.
 
 ## Fixes
 

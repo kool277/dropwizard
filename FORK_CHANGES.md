@@ -2,8 +2,8 @@
 
 This fork is upstream Dropwizard at the commit below, plus the changes listed here. Every file that differs from upstream must be covered by an entry; `compat/check_ledger.py` enforces this.
 
-- **Upstream base:** `a8a09d85e6` on `release/5.0.x` (148 commits after `v5.0.2`). This commit has no upstream tag, which is a deliberate exception to basing the fork on a tag: `v5.0.3` doesn't exist yet, and the later commits include fixes and library updates that the fork should keep. Move to `v5.0.3` once upstream publishes it.
-- **Version scheme:** `5.0.2-a8a09d85-fix.N`
+- **Upstream base:** tag `v5.0.2` plus 148 commits: commit `a8a09d85e6` on `release/5.0.x`. This commit has no upstream tag, which is a deliberate exception to basing the fork on a tag: `v5.0.3` doesn't exist yet, and the later commits include fixes and library updates that the fork should keep. Move to `v5.0.3` once upstream publishes it.
+- **Version scheme:** `5.0.2-fix.N`. Maven orders `5.0.2 < 5.0.2-fix.1 < 5.0.3`, checked with `ComparableVersion`. The base commit isn't part of the version, because Maven would read a hash such as `a8a09d85` as an alpha qualifier and sort it before `5.0.2`.
 
 ## Fork-only
 

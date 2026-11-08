@@ -1,4 +1,4 @@
-# Compatibility report: Dropwizard 5.0.2-a8a09d85-fix.1
+# Compatibility report: Dropwizard 5.0.2-fix.1
 
 ## Summary
 
@@ -6,7 +6,8 @@ This fork is upstream Dropwizard at `a8a09d85e6` on `release/5.0.x`, plus 14 bug
 
 - **Commits:** `a8a09d85e6..fix/5.0.x`: the harness and 4 later fixes to it, 14 bug fixes, the operations guide, and the commit that adds this report. Each commit passed the gate described below.
 - **Date:** 2026-11-07
-- **Upstream base:** `a8a09d85e6`, 148 commits after `v5.0.2`. Upstream hasn't tagged it, which is a deliberate, recorded exception to basing the fork on a tag (see `FORK_CHANGES.md`).
+- **Upstream base:** tag `v5.0.2` plus 148 commits, which is commit `a8a09d85e6` on `release/5.0.x`. Upstream hasn't tagged that commit, which is a deliberate, recorded exception to basing the fork on a tag (see `FORK_CHANGES.md`).
+- **Version:** `5.0.2-fix.1`. Maven orders it after `5.0.2` and before `5.0.3`, checked with `ComparableVersion`.
 
 ## Version matrix
 
@@ -186,7 +187,7 @@ The operations guide (`docs/source/manual/operations.rst`) has the measured CPU,
 
 - `docs/source/manual/operations.rst` (new) and `docs/source/index.rst`: the operations guide (F2)
 - `docs/source/manual/auth.rst`: class-level `@DenyAll` (B1)
-- `RELEASE_NOTES_5.0.2-a8a09d85-fix.1.md`, `FORK_CHANGES.md`, `compat/README.md` and this report
+- `RELEASE_NOTES_5.0.2-fix.1.md`, `FORK_CHANGES.md`, `compat/README.md` and this report
 
 ## Changes not made, and why
 
@@ -215,7 +216,7 @@ In priority order:
 
 ## Commands still to be run by a human
 
-None of this has been done. Each step needs your approval.
+The version is already set by the `build: release` commit. None of the steps below has been done; each needs your approval.
 
 ```bash
 # 1. A v* tag starts the fork's Release workflow, which runs `mvn deploy` towards Maven Central. The fork has no
@@ -224,13 +225,15 @@ gh workflow disable Release --repo kool277/dropwizard
 
 # 2. Push the branch, then the tag. There is no GPG key on this machine, so the tag is annotated, not signed.
 git push origin fix/5.0.x
-git tag -a v5.0.2-a8a09d85-fix.1 -m "Release 5.0.2-a8a09d85-fix.1"
-git push origin v5.0.2-a8a09d85-fix.1
+git tag -a v5.0.2-fix.1 -m "Release 5.0.2-fix.1"
+git push origin v5.0.2-fix.1
 
-# 3. Create the GitHub release, with this report and the SBOM.
-gh release create v5.0.2-a8a09d85-fix.1 --repo kool277/dropwizard --verify-tag \
-    --title "5.0.2-a8a09d85-fix.1" --notes-file RELEASE_NOTES_5.0.2-a8a09d85-fix.1.md \
-    COMPATIBILITY_REPORT.md dropwizard-5.0.2-a8a09d85-fix.1-bom.json
+# 3. Generate the SBOM, then create the GitHub release with this report and the SBOM.
+./mvnw -B -ntp -q org.cyclonedx:cyclonedx-maven-plugin:2.9.3:makeAggregateBom \
+    -DoutputFormat=json -DoutputName=dropwizard-5.0.2-fix.1-bom
+gh release create v5.0.2-fix.1 --repo kool277/dropwizard --verify-tag \
+    --title "5.0.2-fix.1" --notes-file RELEASE_NOTES_5.0.2-fix.1.md \
+    COMPATIBILITY_REPORT.md target/dropwizard-5.0.2-fix.1-bom.json
 
 # 4. Then move fix/5.0.x to the next snapshot version.
 ```
