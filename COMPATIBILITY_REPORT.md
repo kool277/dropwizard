@@ -90,22 +90,22 @@ Every commit passed `compat/gate.sh`. For a commit that touches code, that means
 
 | Id | Module | Bug | Proving test | Upstream |
 |---|---|---|---|---|
-| B1 | auth | Class-level `@DenyAll` is ignored, so methods without their own annotation are reachable anonymously | `ClassLevelDenyAllTest` | None found |
-| B2 | servlets | Path parameters such as `;x.html` choose the asset media type | `AssetServletTest#pathParametersDoNotChangeTheMediaType` | PR 11385, open |
-| B3 | jersey | `AbstractParam` passes client input to `String.format`: 500 instead of 400, and format widths are honoured | `AbstractParamErrorMessageTest` | PR 11364, open |
-| B4 | jersey | Constraint message cache grows with client-chosen map keys | `ConstraintMessageCacheTest` | None found |
-| B5 | hibernate | Nested `@UnitOfWork` on `DualSessionFactory` replaces the outer session, closed sessions stay bound | `DualSessionFactoryUnitOfWorkTest` | None found |
-| B6 | hibernate | `DualSessionFactory` throws `NullPointerException` on threads that never called `prepare` | `DualSessionFactoryTest#threadsThatNeverPreparedUseThePrimaryFactory` | None found |
-| B7 | client | `JerseyClientBuilder` never closes the Apache client's connection pool | `JerseyClientBuilderTest#closesTheApacheClientWhenTheEnvironmentStops` | None found |
-| B8 | client | Timeouts of 25 days or more overflow `int` milliseconds | `HttpClientBuilderTest#timeoutsLongerThanAnIntOfMillisecondsAreNotTruncated` | None found |
-| B9 | util | `DataSizeUnit` conversions overflow to wrong or negative sizes | `DataSizeOverflowTest` | PR 11363, open |
-| B10 | health | Health state listeners are notified twice per change | `HealthCheckManagerListenerTest` | PR 11371, open |
-| B11 | auth | Cache specs containing `recordStats` fail at startup | `CachingWithRecordStatsTest` | None found |
-| B12 | testing | `afterAll` tears down extensions whose `before()` failed or was rolled back | `DropwizardExtensionsSupportAfterAllTest` | None found |
-| B13 | testing | An outer `PER_METHOD` extension never starts under a `PER_CLASS` nested class | `DropwizardExtensionsSupportNestedPerClassTest` | None found |
-| B14 | testing | `DAOTest` leaves the transaction open when an `Error` is thrown | `DAOTestExtensionTest#rollsBackTransactionWhenAnErrorIsThrown` | None found |
+| B1 | auth | Class-level `@DenyAll` is ignored, so methods without their own annotation are reachable anonymously | `ClassLevelDenyAllTest` | Issue #11401 |
+| B2 | servlets | Path parameters such as `;x.html` choose the asset media type | `AssetServletTest#pathParametersDoNotChangeTheMediaType` | PR #11385 by another contributor, tracking |
+| B3 | jersey | `AbstractParam` passes client input to `String.format`: 500 instead of 400, and format widths are honoured | `AbstractParamErrorMessageTest` | PR #11364 by another contributor, tracking |
+| B4 | jersey | Constraint message cache grows with client-chosen map keys | `ConstraintMessageCacheTest` | Issue #11402, PR #11411 |
+| B5 | hibernate | Nested `@UnitOfWork` on `DualSessionFactory` replaces the outer session, closed sessions stay bound | `DualSessionFactoryUnitOfWorkTest` | Issue #11403 |
+| B6 | hibernate | `DualSessionFactory` throws `NullPointerException` on threads that never called `prepare` | `DualSessionFactoryTest#threadsThatNeverPreparedUseThePrimaryFactory` | Issue #11404, PR #11413 |
+| B7 | client | `JerseyClientBuilder` never closes the Apache client's connection pool | `JerseyClientBuilderTest#closesTheApacheClientWhenTheEnvironmentStops` | Issue #11405 |
+| B8 | client | Timeouts of 25 days or more overflow `int` milliseconds | `HttpClientBuilderTest#timeoutsLongerThanAnIntOfMillisecondsAreNotTruncated` | Issue #11406, PR #11412 |
+| B9 | util | `DataSizeUnit` conversions overflow to wrong or negative sizes | `DataSizeOverflowTest` | PR #11363 by another contributor, tracking |
+| B10 | health | Health state listeners are notified twice per change | `HealthCheckManagerListenerTest` | PR #11371 by another contributor, tracking |
+| B11 | auth | Cache specs containing `recordStats` fail at startup | `CachingWithRecordStatsTest` | Issue #11407 |
+| B12 | testing | `afterAll` tears down extensions whose `before()` failed or was rolled back | `DropwizardExtensionsSupportAfterAllTest` | Issue #11408 |
+| B13 | testing | An outer `PER_METHOD` extension never starts under a `PER_CLASS` nested class | `DropwizardExtensionsSupportNestedPerClassTest` | Issue #11409 |
+| B14 | testing | `DAOTest` leaves the transaction open when an `Error` is thrown | `DAOTestExtensionTest#rollsBackTransactionWhenAnErrorIsThrown` | Issue #11410 |
 
-"None found" means a search of upstream issues and pull requests on 2026-11-07 found nothing open about it. The open PRs are by other contributors; the fork's fixes were written independently. Root causes and visible changes are in `FORK_CHANGES.md`.
+The 10 issues were opened on 2026-11-08 after a search of upstream issues and pull requests found no duplicates. The 4 PRs marked "tracking" are by another contributor; the fork's fixes were written independently, and the fork's tests and theirs pass against both implementations. B1, B5, B7 and B11 change visible behaviour, so their issues propose a fix and wait for a maintainer before any PR. Root causes and visible changes are in `FORK_CHANGES.md`.
 
 ## Security review
 
@@ -212,30 +212,25 @@ In priority order:
    - `DAOTest` never closes its `SessionFactory`.
 3. Smaller bugs from the review, each reproduced only by a probe program: a YAML file containing only `---` reports a validation error instead of "empty"; a missing classpath configuration resource causes `NullPointerException`; a non-string system property key causes `ClassCastException`; very large `Duration` values saturate in `toJavaDuration()`; overriding the same key twice in `DropwizardTestSupport` leaves the property set; `ExecutorServiceBuilder` names metrics oddly when the name has no format specifier; `ConfigOverrideRandomPorts` fails without a connector section.
 4. Upstream issues not addressed: 3435 (empty UUID query parameters, blocked upstream), 10907 (the `type` health query parameter only affects the status code), 11305 (logback-access built against logback-core 1.6), 11330 (an advisory that can't be viewed publicly).
-5. Proposing the fixes upstream: 10 of the 14 have no upstream issue or PR.
+5. Upstream: 10 issues are open (#11401 to #11410) and 3 PRs (#11411 to #11413). More PRs follow as reviews come in, at most 3 open at once.
 
 ## Commands still to be run by a human
 
-The version is already set by the `build: release` commit. None of the steps below has been done; each needs your approval.
+Done in this session, with your approval: the `Release` workflow is disabled on `kool277/dropwizard`, the 10 issues and 3 PRs above are open, and `fix/5.0.x` is pushed to `origin`. The rest needs your go-ahead:
 
 ```bash
-# 1. A v* tag starts the fork's Release workflow, which runs `mvn deploy` towards Maven Central. The fork has no
-#    credentials, so it should fail, but io.dropwizard coordinates must never be published, so disable it first.
-gh workflow disable Release --repo kool277/dropwizard
-
-# 2. Push the branch, then the tag. There is no GPG key on this machine, so the tag is annotated, not signed.
-git push origin fix/5.0.x
+# 1. Tag the release and push the tag. There is no GPG key on this machine, so the tag is annotated, not signed.
 git tag -a v5.0.2-fix.1 -m "Release 5.0.2-fix.1"
 git push origin v5.0.2-fix.1
 
-# 3. Generate the SBOM, then create the GitHub release with this report and the SBOM.
+# 2. Generate the SBOM, then create the GitHub release with this report and the SBOM.
 ./mvnw -B -ntp -q org.cyclonedx:cyclonedx-maven-plugin:2.9.3:makeAggregateBom \
     -DoutputFormat=json -DoutputName=dropwizard-5.0.2-fix.1-bom
 gh release create v5.0.2-fix.1 --repo kool277/dropwizard --verify-tag \
     --title "5.0.2-fix.1" --notes-file RELEASE_NOTES_5.0.2-fix.1.md \
     COMPATIBILITY_REPORT.md target/dropwizard-5.0.2-fix.1-bom.json
 
-# 4. Then move fix/5.0.x to the next snapshot version.
+# 3. Move fix/5.0.x to the next snapshot and push it.
+./mvnw -B -ntp -q org.codehaus.mojo:versions-maven-plugin:2.18.0:set \
+    -DnewVersion=5.0.2-fix.2-SNAPSHOT -DprocessAllModules=true -DgenerateBackupPoms=false
 ```
-
-Four commit subjects reference upstream pull requests (`dropwizard/dropwizard#11363`, `#11364`, `#11371`, `#11385`). Once the branch is pushed, GitHub shows a reference to this fork on each of those pull requests.
