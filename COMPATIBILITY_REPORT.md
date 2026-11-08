@@ -216,21 +216,4 @@ In priority order:
 
 ## Commands still to be run by a human
 
-Done in this session, with your approval: the `Release` workflow is disabled on `kool277/dropwizard`, the 10 issues and 3 PRs above are open, and `fix/5.0.x` is pushed to `origin`. The rest needs your go-ahead:
-
-```bash
-# 1. Tag the release and push the tag. There is no GPG key on this machine, so the tag is annotated, not signed.
-git tag -a v5.0.2-fix.1 -m "Release 5.0.2-fix.1"
-git push origin v5.0.2-fix.1
-
-# 2. Generate the SBOM, then create the GitHub release with this report and the SBOM.
-./mvnw -B -ntp -q org.cyclonedx:cyclonedx-maven-plugin:2.9.3:makeAggregateBom \
-    -DoutputFormat=json -DoutputName=dropwizard-5.0.2-fix.1-bom
-gh release create v5.0.2-fix.1 --repo kool277/dropwizard --verify-tag \
-    --title "5.0.2-fix.1" --notes-file RELEASE_NOTES_5.0.2-fix.1.md \
-    COMPATIBILITY_REPORT.md target/dropwizard-5.0.2-fix.1-bom.json
-
-# 3. Move fix/5.0.x to the next snapshot and push it.
-./mvnw -B -ntp -q org.codehaus.mojo:versions-maven-plugin:2.18.0:set \
-    -DnewVersion=5.0.2-fix.2-SNAPSHOT -DprocessAllModules=true -DgenerateBackupPoms=false
-```
+None. With your approval, this session disabled the `Release` workflow on `kool277/dropwizard`, opened the upstream issues and pull requests above, pushed `fix/5.0.x`, pushed the annotated tag `v5.0.2-fix.1`, and published the GitHub release with this report and the SBOM: https://github.com/kool277/dropwizard/releases/tag/v5.0.2-fix.1. `fix/5.0.x` then moved to `5.0.2-fix.2-SNAPSHOT`.
