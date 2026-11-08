@@ -6,6 +6,16 @@ This fork is upstream Dropwizard at the commit below, plus the changes listed he
 - **Releases:** `5.0.2-fix.1`, tag `v5.0.2-fix.1` on 2026-11-08: https://github.com/kool277/dropwizard/releases/tag/v5.0.2-fix.1
 - **Version scheme:** `5.0.2-fix.N`. Maven orders `5.0.2 < 5.0.2-fix.1 < 5.0.3`, checked with `ComparableVersion`. The base commit isn't part of the version, because Maven would read a hash such as `a8a09d85` as an alpha qualifier and sort it before `5.0.2`.
 
+## Syncing with upstream
+
+`fix/5.0.x` is pushed and tagged, so it is never rebased or force-pushed. Upstream is merged into it instead (decided on 2026-11-08). On that date `upstream/release/5.0.x` was still `a8a09d85e6`, so the merge was a no-op.
+
+1. Run `git fetch upstream --tags`.
+2. For each fix that upstream has merged, revert the fork's commit with `git revert <commit>` before merging, so that upstream's version applies without conflicts. Set the fix's status to "merged upstream in <version>" and remove its `Files` line, which no longer differs from upstream.
+3. Merge with `git merge upstream/release/5.0.x`, or merge the new upstream tag.
+4. Set `compat/UPSTREAM_BASE` to the merged upstream commit, move the upstream worktree to it, re-record the baseline with `compat/docker.sh compat/baseline.sh`, and commit both.
+5. Run `compat/gate.sh --full`. Every remaining fix must still fail on the new base and pass here, as shown by `compat/prove.sh`.
+
 ## Fork-only
 
 ### F1: Compatibility harness and fork documents
