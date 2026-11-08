@@ -22,6 +22,13 @@ This fork is upstream Dropwizard at the commit below, plus the changes listed he
 - Status: fork-only. It could be proposed upstream, but its measurements describe one machine.
 - Files: `docs/source/manual/operations.rst`, `docs/source/index.rst`
 
+### F3: Release version
+
+- Why: gives the fork its own version, `5.0.2-fix.1`, so that its artifacts can't be mistaken for an upstream release.
+- Commit: `build: release 5.0.2-fix.1`
+- Status: fork-only
+- Files: `pom.xml`, `*/pom.xml`
+
 ## Fixes
 
 Each fix has a test that fails on the upstream base and passes here, shown by `compat/prove.sh`.
