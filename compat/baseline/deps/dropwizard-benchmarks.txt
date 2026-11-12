@@ -39,8 +39,8 @@ jakarta.xml.bind:jakarta.xml.bind-api:jar:4.0.5:compile -- module jakarta.xml.bi
 net.sf.jopt-simple:jopt-simple:jar:5.0.4:compile -- module jopt.simple (auto)
 org.apache.commons:commons-math3:jar:3.6.1:compile -- module commons.math3 (auto)
 org.apiguardian:apiguardian-api:jar:1.1.2:compile -- module org.apiguardian.api
-org.eclipse.jetty:jetty-io:jar:12.1.14:compile -- module org.eclipse.jetty.io
-org.eclipse.jetty:jetty-util:jar:12.1.14:compile -- module org.eclipse.jetty.util
+org.eclipse.jetty:jetty-io:jar:12.1.15:compile -- module org.eclipse.jetty.io
+org.eclipse.jetty:jetty-util:jar:12.1.15:compile -- module org.eclipse.jetty.util
 org.glassfish.expressly:expressly:jar:5.0.0:runtime -- module org.glassfish.expressly [auto]
 org.glassfish.hk2.external:aopalliance-repackaged:jar:3.0.6:compile -- module org.aopalliance [auto]
 org.glassfish.hk2:hk2-api:jar:3.0.6:compile -- module org.glassfish.hk2.api [auto]

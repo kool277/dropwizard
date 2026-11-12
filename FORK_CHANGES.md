@@ -2,13 +2,19 @@
 
 This fork is upstream Dropwizard at the commit below, plus the changes listed here. Every file that differs from upstream must be covered by an entry; `compat/check_ledger.py` enforces this.
 
-- **Upstream base:** tag `v5.0.2` plus 148 commits: commit `a8a09d85e6` on `release/5.0.x`. This commit has no upstream tag, which is a deliberate exception to basing the fork on a tag: `v5.0.3` doesn't exist yet, and the later commits include fixes and library updates that the fork should keep. Move to `v5.0.3` once upstream publishes it.
+- **Upstream base:** tag `v5.0.2` plus 150 commits: commit `693361b293` on `release/5.0.x`, merged on 2026-11-12 (`5.0.2-fix.1` was built on `a8a09d85e6`, 148 commits after the tag). This commit has no upstream tag, which is a deliberate exception to basing the fork on a tag: `v5.0.3` doesn't exist yet, and the later commits include fixes and library updates that the fork should keep. Move to `v5.0.3` once upstream publishes it.
 - **Releases:** `5.0.2-fix.1`, tag `v5.0.2-fix.1` on 2026-11-08: https://github.com/kool277/dropwizard/releases/tag/v5.0.2-fix.1
 - **Version scheme:** `5.0.2-fix.N`. Maven orders `5.0.2 < 5.0.2-fix.1 < 5.0.3`, checked with `ComparableVersion`. The base commit isn't part of the version, because Maven would read a hash such as `a8a09d85` as an alpha qualifier and sort it before `5.0.2`.
 
 ## Syncing with upstream
 
 `fix/5.0.x` is pushed and tagged, so it is never rebased or force-pushed. Upstream is merged into it instead (decided on 2026-11-08). On that date `upstream/release/5.0.x` was still `a8a09d85e6`, so the merge was a no-op.
+
+Merges so far:
+
+| Date | Upstream commit | Brought in | Fixes reverted |
+|---|---|---|---|
+| 2026-11-12 | `693361b293` | #11361 (optional limit on exception length in JSON logs), #11415 (Jetty 12.1.14 to 12.1.15) | None: no fix had been merged upstream |
 
 1. Run `git fetch upstream --tags`.
 2. For each fix that upstream has merged, revert the fork's commit with `git revert <commit>` before merging, so that upstream's version applies without conflicts. Set the fix's status to "merged upstream in <version>" and remove its `Files` line, which no longer differs from upstream.

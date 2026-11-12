@@ -2,9 +2,9 @@ com.fasterxml.jackson.core:jackson-annotations:jar:2.22:compile -- module com.fa
 io.dropwizard.metrics:metrics-core:jar:VERSION:compile -- module com.codahale.metrics [auto]
 io.dropwizard:dropwizard-util:jar:VERSION:compile -- module io.dropwizard.util [auto]
 jakarta.servlet:jakarta.servlet-api:jar:6.0.0:runtime -- module jakarta.servlet
-org.eclipse.jetty:jetty-http:jar:12.1.14:compile -- module org.eclipse.jetty.http
-org.eclipse.jetty:jetty-io:jar:12.1.14:compile -- module org.eclipse.jetty.io
-org.eclipse.jetty:jetty-server:jar:12.1.14:compile -- module org.eclipse.jetty.server
-org.eclipse.jetty:jetty-util:jar:12.1.14:compile -- module org.eclipse.jetty.util
+org.eclipse.jetty:jetty-http:jar:12.1.15:compile -- module org.eclipse.jetty.http
+org.eclipse.jetty:jetty-io:jar:12.1.15:compile -- module org.eclipse.jetty.io
+org.eclipse.jetty:jetty-server:jar:12.1.15:compile -- module org.eclipse.jetty.server
+org.eclipse.jetty:jetty-util:jar:12.1.15:compile -- module org.eclipse.jetty.util
 org.jspecify:jspecify:jar:1.0.1:compile -- module org.jspecify
 org.slf4j:slf4j-api:jar:2.0.20:compile -- module org.slf4j

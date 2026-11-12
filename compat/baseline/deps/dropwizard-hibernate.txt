@@ -69,14 +69,14 @@ org.apache.commons:commons-text:jar:1.15.0:compile -- module org.apache.commons.
 org.apache.tomcat:tomcat-jdbc:jar:11.0.27:compile -- module tomcat.jdbc (auto)
 org.apache.tomcat:tomcat-juli:jar:11.0.27:compile -- module org.apache.tomcat.juli
 org.eclipse.angus:angus-activation:jar:2.0.0:runtime -- module org.eclipse.angus.activation
-org.eclipse.jetty.ee10:jetty-ee10-servlet:jar:12.1.14:compile -- module org.eclipse.jetty.ee10.servlet
+org.eclipse.jetty.ee10:jetty-ee10-servlet:jar:12.1.15:compile -- module org.eclipse.jetty.ee10.servlet
 org.eclipse.jetty.toolchain.setuid:jetty-setuid-jna:jar:2.0.3:compile -- module org.eclipse.jetty.setuid.jna
-org.eclipse.jetty:jetty-http:jar:12.1.14:compile -- module org.eclipse.jetty.http
-org.eclipse.jetty:jetty-io:jar:12.1.14:compile -- module org.eclipse.jetty.io
-org.eclipse.jetty:jetty-security:jar:12.1.14:compile -- module org.eclipse.jetty.security
-org.eclipse.jetty:jetty-server:jar:12.1.14:compile -- module org.eclipse.jetty.server
-org.eclipse.jetty:jetty-session:jar:12.1.14:compile -- module org.eclipse.jetty.session
-org.eclipse.jetty:jetty-util:jar:12.1.14:compile -- module org.eclipse.jetty.util
+org.eclipse.jetty:jetty-http:jar:12.1.15:compile -- module org.eclipse.jetty.http
+org.eclipse.jetty:jetty-io:jar:12.1.15:compile -- module org.eclipse.jetty.io
+org.eclipse.jetty:jetty-security:jar:12.1.15:compile -- module org.eclipse.jetty.security
+org.eclipse.jetty:jetty-server:jar:12.1.15:compile -- module org.eclipse.jetty.server
+org.eclipse.jetty:jetty-session:jar:12.1.15:compile -- module org.eclipse.jetty.session
+org.eclipse.jetty:jetty-util:jar:12.1.15:compile -- module org.eclipse.jetty.util
 org.glassfish.expressly:expressly:jar:5.0.0:compile -- module org.glassfish.expressly [auto]
 org.glassfish.hk2.external:aopalliance-repackaged:jar:3.0.6:compile -- module org.aopalliance [auto]
 org.glassfish.hk2:hk2-api:jar:3.0.6:compile -- module org.glassfish.hk2.api [auto]
