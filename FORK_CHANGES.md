@@ -212,3 +212,14 @@ Upstream pull requests from this fork are paced: at most 3 open at once, and the
 - Commit: `73941f31ce` fix(testing): roll back DAOTest transactions when an Error is thrown
 - Status: issue [#11410](https://github.com/dropwizard/dropwizard/issues/11410); PR to follow after one of this fork's open PRs has been reviewed or merged (at most 3 open)
 - Files: `dropwizard-testing/src/main/java/io/dropwizard/testing/common/DAOTest.java`, `dropwizard-testing/src/test/java/io/dropwizard/testing/junit5/DAOTestExtensionTest.java`
+
+### B15: The documentation doesn't build with `sphinx-build -W`
+
+- Upstream issue: [#11418](https://github.com/dropwizard/dropwizard/issues/11418), opened on 2026-11-12. Introduced by upstream PR [#11361](https://github.com/dropwizard/dropwizard/pull/11361), merged into the fork on 2026-11-12.
+- Module: `docs`
+- Root cause: in the JSON exception table of `configuration.rst`, `characterLimit_` ends with an underscore, which reStructuredText reads as a link to a target that doesn't exist. Upstream's `docs` workflow builds without `-W`, so it only warns there; `compat/gate.sh` treats warnings as errors.
+- Visible change: the rendered table shows `characterLimit` as code instead of a broken link.
+- Proving check: `sphinx-build -W` in `compat/gate.sh` fails on upstream `693361b293` and passes here.
+- Commit: `docs: fix broken reference to characterLimit in configuration.rst`
+- Status: issue [#11418](https://github.com/dropwizard/dropwizard/issues/11418); PR to follow after one of this fork's open PRs has been reviewed or merged (at most 3 open)
+- Files: `docs/source/manual/configuration.rst`
